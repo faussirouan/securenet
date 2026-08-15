@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecureNet · Connexion Admin</title>
+    
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ============================================
+           VARIABLES CSS
+           ============================================ */
+        :root {
+            --bg-overlay: rgba(13, 13, 13, 0.85);
+            --bg-form: rgba(26, 26, 26, 0.8);
+            --border-color: rgba(26, 71, 42, 0.6);
+            --text-color: #ffffff;
+            --text-muted: #8a8a8a;
+            --primary: #2ecc71;
+            --primary-dark: #1a472a;
+            --primary-glow: rgba(46, 204, 113, 0.3);
+            --input-bg: rgba(26, 26, 26, 0.8);
+            --shadow-color: rgba(0, 0, 0, 0.8);
+            --card-bg: rgba(13, 13, 13, 0.85);
+        }
+
+        /* Mode sombre (par défaut) - on garde le même style */
+        .dark-mode {
+            --bg-overlay: rgba(13, 13, 13, 0.85);
+            --bg-form: rgba(26, 26, 26, 0.8);
+            --border-color: rgba(26, 71, 42, 0.6);
+            --text-color: #ffffff;
+            --text-muted: #8a8a8a;
+            --input-bg: rgba(26, 26, 26, 0.8);
+            --shadow-color: rgba(0, 0, 0, 0.8);
+            --card-bg: rgba(13, 13, 13, 0.85);
+        }
+
+        /* Mode clair */
+        .light-mode {
+            --bg-overlay: rgba(255, 255, 255, 0.92);
+            --bg-form: rgba(245, 245, 245, 0.9);
+            --border-color: rgba(1, 62, 55, 0.3);
+            --text-color: #1a1a1a;
+            --text-muted: #5a5a5a;
+            --input-bg: rgba(255, 255, 255, 0.9);
+            --shadow-color: rgba(0, 0, 0, 0.15);
+            --card-bg: rgba(255, 255, 255, 0.92);
+        }
+
+        /* ============================================
+           STYLES GÉNÉRAUX
+           ============================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0a0a0a 0%, #0d1f13 50%, #0a0a0a 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            transition: background 0.3s ease;
+        }
+
+        /* Corps en mode clair */
+        body.light-mode {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 50%, #e8f5e9 100%);
+        }
+
+        /* ============================================
+           OVERLAY
+           ============================================ */
+        .login-overlay {
+            position: relative;
+            width: 100%;
+            max-width: 1100px;
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 25px 60px var(--shadow-color);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .row {
+            margin: 0 !important;
+        }
+
+        /* ============================================
+           BOUTON JOUR/NUIT EN HAUT À DROITE
+           ============================================ */
+        .theme-toggle-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            z-index: 100;
+            background: var(--bg-form);
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-toggle-btn:hover {
+            transform: scale(1.05);
+            border-color: var(--primary);
+            box-shadow: 0 0 20px var(--primary-glow);
+        }
+
+        /* ============================================
+           PARTIE GAUCHE : IMAGE
+           ============================================ */
+        .image-section {
+            padding: 0;
+            height: 100%;
+            min-height: 500px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .image-section img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .image-section .image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(10, 10, 10, 0.6), rgba(13, 31, 19, 0.7));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 40px;
+            text-align: center;
+            color: #ffffff;
+            transition: background 0.3s ease;
+        }
+
+        /* Mode clair - overlay image */
+        body.light-mode .image-overlay {
+            background: linear-gradient(135deg, rgba(1, 62, 55, 0.5), rgba(1, 62, 55, 0.6));
+        }
+
+        .image-overlay i {
+            font-size: 64px;
+            color: var(--primary);
+            margin-bottom: 15px;
+            text-shadow: 0 0 40px var(--primary-glow);
+        }
+
+        .image-overlay h2 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, var(--primary), #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .image-overlay p {
+            font-size: 15px;
+            color: #b0b0b0;
+            max-width: 300px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .image-overlay .badge-container {
+            margin-top: 20px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .image-overlay .badge-container .badge-item {
+            background: rgba(46, 204, 113, 0.1);
+            border: 1px solid rgba(46, 204, 113, 0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .image-overlay .badge-container .badge-item i {
+            font-size: 14px;
+            margin: 0;
+            text-shadow: none;
+        }
+
+        /* ============================================
+           PARTIE DROITE : FORMULAIRE
+           ============================================ */
+        .form-section {
+            padding: 45px 40px;
+            background: transparent;
+            display: flex;
+            align-items: center;
+            min-height: 500px;
+        }
+
+        .form-container {
+            width: 100%;
+            max-width: 380px;
+            margin: 0 auto;
+        }
+
+        .form-container .logo {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .form-container .logo i {
+            font-size: 38px;
+            color: var(--primary);
+            background: rgba(46, 204, 113, 0.1);
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px solid rgba(46, 204, 113, 0.2);
+        }
+
+        .form-container h2 {
+            font-weight: 700;
+            color: var(--text-color);
+            font-size: 24px;
+            margin-bottom: 5px;
+            font-family: 'Chakra Petch', sans-serif;
+        }
+
+        .form-container p.subtitle {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        .form-control {
+            height: 42px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: var(--input-bg);
+            color: var(--text-color);
+            font-size: 14px;
+            padding-left: 38px;
+            transition: all 0.3s ease;
+        }
+
+        .form-control::placeholder {
+            color: #5a5a5a;
+            font-size: 13px;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-glow);
+            background: var(--input-bg);
+            color: var(--text-color);
+        }
+
+        .input-group-text {
+            background: var(--input-bg);
+            border: 1px solid var(--border-color);
+            border-right: none;
+            border-radius: 8px 0 0 8px;
+            color: var(--primary);
+            height: 42px;
+            font-size: 14px;
+            padding: 0 12px;
+        }
+
+        .input-group .form-control {
+            border-left: none;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .input-group {
+            margin-bottom: 14px;
+        }
+
+        .btn-login {
+            height: 42px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            border: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            width: 100%;
+            color: #ffffff;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px var(--primary-glow);
+            background: linear-gradient(135deg, var(--primary-dark), #27ae60);
+            color: #ffffff;
+        }
+
+        .btn-login:active {
+            transform: scale(0.97);
+        }
+
+        .form-check {
+            margin: 12px 0;
+        }
+
+        .form-check-input {
+            background-color: var(--input-bg);
+            border-color: var(--border-color);
+            cursor: pointer;
+            width: 16px;
+            height: 16px;
+        }
+
+        .form-check-input:checked {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .form-check-label {
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+
+        .forgot-password {
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .forgot-password:hover {
+            color: #27ae60;
+            text-decoration: underline;
+        }
+
+        .register-link {
+            text-align: center;
+            margin-top: 18px;
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+
+        .register-link a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .register-link a:hover {
+            color: #27ae60;
+            text-decoration: underline;
+        }
+
+        .btn-outline-secondary {
+            background: var(--input-bg);
+            border: 1px solid var(--border-color);
+            border-left: none;
+            border-radius: 0 8px 8px 0;
+            color: var(--primary);
+            height: 42px;
+            padding: 0 12px;
+        }
+
+        .btn-outline-secondary:hover {
+            background: rgba(46, 204, 113, 0.2);
+            border-color: var(--primary);
+            color: var(--text-color);
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+            color: var(--text-muted);
+            font-size: 12px;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .divider::before {
+            margin-right: 10px;
+        }
+
+        .divider::after {
+            margin-left: 10px;
+        }
+
+        /* ============================================
+           SÉLECTEUR DE LANGUE
+           ============================================ */
+        .lang-selector {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            z-index: 100;
+            background: var(--bg-form);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 0.3rem 0.7rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .lang-selector:hover {
+            border-color: var(--primary);
+        }
+
+        .lang-selector:focus {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+        }
+
+        /* ============================================
+           ALERTES
+           ============================================ */
+        .custom-alert {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 14px 24px;
+            background: rgba(13, 13, 13, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            font-weight: 500;
+            z-index: 9999;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+            animation: slideIn 0.4s ease;
+            max-width: 380px;
+            font-size: 14px;
+            border: 2px solid;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .custom-alert i {
+            font-size: 20px;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slideOut {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+
+        /* ============================================
+           RESPONSIVE
+           ============================================ */
+        @media (max-width: 992px) {
+            .image-section {
+                display: none;
+            }
+            
+            .form-section {
+                padding: 35px 30px;
+                min-height: auto;
+            }
+            
+            .form-container {
+                max-width: 100%;
+            }
+
+            .login-overlay {
+                max-width: 480px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .login-overlay {
+                border-radius: 12px;
+            }
+            
+            .form-section {
+                padding: 25px 20px;
+            }
+
+            .theme-toggle-btn {
+                top: 10px;
+                right: 10px;
+                width: 35px;
+                height: 35px;
+                font-size: 1rem;
+            }
+
+            .lang-selector {
+                top: 10px;
+                left: 10px;
+                font-size: 0.75rem;
+                padding: 0.2rem 0.5rem;
+            }
+        }
+
+        /* ============================================
+           SPINNER DE CHARGEMENT
+           ============================================ */
+        .spinner-border-sm {
+            width: 1.2rem;
+            height: 1.2rem;
+        }
+
+        .btn-login:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== OVERLAY PRINCIPAL ===== -->
+    <div class="login-overlay" id="loginOverlay">
+        <div class="row">
+            
+            <!-- ===== PARTIE GAUCHE : IMAGE ===== -->
+            <div class="col-md-6 image-section">
+                <img src="image projet/Secure.jpg" 
+                     alt="Dashboard Admin" 
+                     loading="lazy"
+                     onerror="this.style.display='none'">
+                <div class="image-overlay">
+                    <i class="bi bi-cpu"></i>
+                    <h2 data-i18n="admin_title">Administration</h2>
+                    <p data-i18n="admin_subtitle">Gérez vos données et votre infrastructure en toute sécurité</p>
+                    
+                    <div class="badge-container">
+                        <span class="badge-item">
+                            <i class="bi bi-graph-up"></i> <span data-i18n="badge_analytics">Analytics</span>
+                        </span>
+                        <span class="badge-item">
+                            <i class="bi bi-shield-check"></i> <span data-i18n="badge_secure">Sécurisé</span>
+                        </span>
+                        <span class="badge-item">
+                            <i class="bi bi-cloud"></i> <span data-i18n="badge_cloud">Cloud</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- ===== PARTIE DROITE : FORMULAIRE ===== -->
+            <div class="col-md-6 form-section">
+                
+                <!-- Sélecteur de langue -->
+                <select class="lang-selector" id="language-selector">
+                    <option value="fr">🇫🇷 FR</option>
+                    <option value="en">🇬🇧 EN</option>
+                </select>
+
+                <!-- Bouton Jour/Nuit -->
+                <button class="theme-toggle-btn" id="theme-toggle" aria-label="Basculer le mode">
+                    🌙
+                </button>
+
+                <div class="form-container">
+                    
+                    <div class="logo">
+                        <i class="bi bi-shield-lock"></i>
+                    </div>
+                    
+                    <h2 data-i18n="login_title">Connexion Admin</h2>
+                    <p class="subtitle" data-i18n="login_subtitle">Accédez à votre espace sécurisé</p>
+                    
+                    <form id="adminLoginForm" novalidate>
+                        <!-- Email -->
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i class="bi bi-envelope"></i>
+                            </span>
+                            <input type="email" class="form-control" id="loginEmail" 
+                                   placeholder="Email" required
+                                   data-i18n-placeholder="email_placeholder">
+                            <div class="invalid-feedback" data-i18n="email_invalid">
+                                Veuillez entrer un email valide
+                            </div>
+                        </div>
+                        
+                        <!-- Mot de passe -->
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i class="bi bi-lock"></i>
+                            </span>
+                            <input type="password" class="form-control" id="loginPassword" 
+                                   placeholder="Mot de passe" required
+                                   data-i18n-placeholder="password_placeholder">
+                            <button type="button" class="btn btn-outline-secondary" 
+                                    id="togglePasswordBtn">
+                                <i class="bi bi-eye" id="toggleIcon"></i>
+                            </button>
+                            <div class="invalid-feedback" data-i18n="password_invalid">
+                                Le mot de passe est requis
+                            </div>
+                        </div>
+                        
+                        <!-- Options -->
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="rememberMe">
+                                <label class="form-check-label" for="rememberMe" data-i18n="remember_me">Se souvenir</label>
+                            </div>
+                            <a href="#" class="forgot-password" data-i18n="forgot_password">Mot de passe oublié ?</a>
+                        </div>
+                        
+                        <!-- Bouton connexion -->
+                        <button type="submit" class="btn-login mt-2" id="btnLogin">
+                            <i class="bi bi-box-arrow-in-right me-1"></i>
+                            <span data-i18n="login_btn">Se connecter</span>
+                        </button>
+                    </form>
+                    
+                    <div class="divider" data-i18n="or">ou</div>
+                    
+                    <div class="register-link">
+                        <span data-i18n="no_account">Pas encore de compte ?</span>
+                        <a href="#" data-i18n="create_account">Créer un compte</a>
+                    </div>
+                    
+                    <!-- Infos de test -->
+                    <div class="text-center mt-3">
+                        <small class="text-muted" style="font-size: 11px; opacity: 0.6;">
+                            <span data-i18n="test_credentials">Identifiants de test : admin@exemple.com / admin123</span>
+                        </small>
+                    </div>
+                    
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <!-- ============================================
+       JAVASCRIPT
+       ============================================ -->
+    <script>
+        /* ============================================
+           CONFIGURATION
+           ============================================ */
+        const CONFIG = {
+            themeKey: 'theme',
+            languageKey: 'language',
+            darkClass: 'dark-mode',
+            lightClass: 'light-mode'
+        };
+
+        /* ============================================
+           1. GESTION DU THÈME (JOUR/NUIT)
+           ============================================ */
+        const ThemeManager = {
+            init() {
+                this.toggleBtn = document.getElementById('theme-toggle');
+                if (!this.toggleBtn) return;
+                
+                this.applySavedTheme();
+                this.toggleBtn.addEventListener('click', () => this.toggle());
+            },
+            
+            applyTheme(themeName) {
+                const isDark = themeName === 'dark';
+                
+                // Appliquer la classe sur le body
+                document.body.classList.toggle(CONFIG.darkClass, isDark);
+                document.body.classList.toggle(CONFIG.lightClass, !isDark);
+                
+                localStorage.setItem(CONFIG.themeKey, themeName);
+                this.toggleBtn.textContent = isDark ? '☀️' : '🌙';
+                this.toggleBtn.setAttribute('aria-label', isDark ? 'Passer en mode clair' : 'Passer en mode sombre');
+            },
+            
+            applySavedTheme() {
+                const savedTheme = localStorage.getItem(CONFIG.themeKey);
+                
+                if (savedTheme) {
+                    this.applyTheme(savedTheme);
+                } else {
+                    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                    this.applyTheme(prefersDark ? 'dark' : 'light');
+                }
+            },
+            
+            toggle() {
+                const isDark = document.body.classList.contains(CONFIG.darkClass);
+                this.applyTheme(isDark ? 'light' : 'dark');
+            }
+        };
+
+        /* ============================================
+           2. GESTION DES LANGUES (TRADUCTION)
+           ============================================ */
+        const LanguageManager = {
+            init() {
+                this.selector = document.getElementById('language-selector');
+                if (!this.selector) return;
+                
+                this.loadSavedLanguage();
+                this.selector.addEventListener('change', (e) => {
+                    this.changeLanguage(e.target.value);
+                });
+            },
+            
+            getDefaultLanguage() {
+                const saved = localStorage.getItem(CONFIG.languageKey);
+                if (saved) return saved;
+                
+                const browserLang = navigator.language.split('-')[0];
+                return ['fr', 'en'].includes(browserLang) ? browserLang : 'fr';
+            },
+            
+            loadSavedLanguage() {
+                const lang = this.getDefaultLanguage();
+                this.selector.value = lang;
+                this.fetchTranslations(lang);
+            },
+            
+            changeLanguage(lang) {
+                this.selector.value = lang;
+                this.fetchTranslations(lang);
+                localStorage.setItem(CONFIG.languageKey, lang);
+                document.documentElement.lang = lang;
+            },
+            
+            fetchTranslations(lang) {
+                // Utiliser le même dossier lang/ que l'accueil
+                fetch(`lang/${lang}.json`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`Fichier ${lang}.json introuvable`);
+                        }
+                        return response.json();
+                    })
+                    .then(translations => {
+                        this.applyTranslations(translations);
+                        console.log(`✅ Traduction chargée : ${lang}`);
+                    })
+                    .catch(error => {
+                        console.error('❌ Erreur de chargement des traductions:', error);
+                        // Fallback: utiliser les textes par défaut
+                    });
+            },
+            
+            applyTranslations(translations) {
+                // Traduire les éléments avec data-i18n
+                document.querySelectorAll('[data-i18n]').forEach(element => {
+                    const key = element.getAttribute('data-i18n');
+                    if (translations[key] !== undefined && translations[key] !== null) {
+                        element.textContent = translations[key];
+                    }
+                });
+                
+                // Traduire les placeholders
+                document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
+                    const key = element.getAttribute('data-i18n-placeholder');
+                    if (translations[key] !== undefined && translations[key] !== null) {
+                        element.placeholder = translations[key];
+                    }
+                });
+            }
+        };
+
+        /* ============================================
+           3. GESTION DE LA CONNEXION
+           ============================================ */
+        const AuthManager = {
+            init() {
+                this.form = document.getElementById('adminLoginForm');
+                this.emailInput = document.getElementById('loginEmail');
+                this.passwordInput = document.getElementById('loginPassword');
+                this.rememberCheck = document.getElementById('rememberMe');
+                this.btnLogin = document.getElementById('btnLogin');
+                this.togglePasswordBtn = document.getElementById('togglePasswordBtn');
+                
+                if (!this.form) return;
+                
+                // Restaurer l'email si "Se souvenir de moi"
+                this.restoreSavedEmail();
+                
+                // Toggle mot de passe visible
+                this.togglePasswordBtn.addEventListener('click', () => this.togglePassword());
+                
+                // Soumettre le formulaire
+                this.form.addEventListener('submit', (e) => this.handleLogin(e));
+                
+                // Validation en temps réel
+                this.emailInput.addEventListener('input', () => this.validateField(this.emailInput));
+                this.passwordInput.addEventListener('input', () => this.validateField(this.passwordInput));
+            },
+            
+            togglePassword() {
+                const toggleIcon = document.getElementById('toggleIcon');
+                if (this.passwordInput.type === 'password') {
+                    this.passwordInput.type = 'text';
+                    toggleIcon.className = 'bi bi-eye-slash';
+                } else {
+                    this.passwordInput.type = 'password';
+                    toggleIcon.className = 'bi bi-eye';
+                }
+            },
+            
+            validateField(input) {
+                if (input.value.trim().length > 0) {
+                    input.classList.remove('is-invalid');
+                    input.classList.add('is-valid');
+                } else {
+                    input.classList.remove('is-valid');
+                    input.classList.add('is-invalid');
+                }
+            },
+            
+            restoreSavedEmail() {
+                const savedEmail = localStorage.getItem('adminEmail');
+                if (savedEmail) {
+                    this.emailInput.value = savedEmail;
+                    this.rememberCheck.checked = true;
+                }
+            },
+            
+            handleLogin(event) {
+                event.preventDefault();
+                
+                const email = this.emailInput.value.trim();
+                const password = this.passwordInput.value.trim();
+                const remember = this.rememberCheck.checked;
+                
+                // Validation
+                let isValid = true;
+                
+                if (!email) {
+                    this.emailInput.classList.add('is-invalid');
+                    isValid = false;
+                } else {
+                    this.emailInput.classList.remove('is-invalid');
+                }
+                
+                if (!password) {
+                    this.passwordInput.classList.add('is-invalid');
+                    isValid = false;
+                } else {
+                    this.passwordInput.classList.remove('is-invalid');
+                }
+                
+                if (!isValid) {
+                    this.showAlert('⚠️ Veuillez remplir tous les champs.', '#e74c3c', 'bi-exclamation-triangle');
+                    return;
+                }
+                
+                // Désactiver le bouton pendant la connexion
+                this.btnLogin.disabled = true;
+                this.btnLogin.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span> Connexion...';
+                
+                // 🔐 SIMULATION D'AUTHENTIFICATION
+                // Remplacez par votre vraie authentification (API, Supabase, etc.)
+                setTimeout(() => {
+                    if (email === 'admin@exemple.com' && password === 'admin123') {
+                        // Succès
+                        this.showAlert('✅ Connexion réussie ! Bienvenue administrateur.', '#2ecc71', 'bi-check-circle');
+                        
+                        if (remember) {
+                            localStorage.setItem('adminEmail', email);
+                        } else {
+                            localStorage.removeItem('adminEmail');
+                        }
+                        
+                        // Stocker la session
+                        localStorage.setItem('isAdminLoggedIn', 'true');
+                        
+                        // ✅ REDIRECTION VERS LE DASHBOARD
+                        setTimeout(() => {
+                            window.location.href = 'sidebar.html';
+                        }, 500);
+                        
+                    } else {
+                        // Échec
+                        this.showAlert('❌ Email ou mot de passe incorrect.', '#e74c3c', 'bi-x-circle');
+                        this.passwordInput.value = '';
+                        this.passwordInput.focus();
+                        
+                        // Réactiver le bouton
+                        this.btnLogin.disabled = false;
+                        this.btnLogin.innerHTML = '<i class="bi bi-box-arrow-in-right me-1"></i> Se connecter';
+                    }
+                }, 1000);
+            },
+            
+            showAlert(message, color, icon = 'bi-info-circle') {
+                // Supprimer les anciennes alertes
+                const oldAlert = document.querySelector('.custom-alert');
+                if (oldAlert) oldAlert.remove();
+                
+                const alert = document.createElement('div');
+                alert.className = 'custom-alert';
+                alert.style.borderColor = color;
+                alert.style.color = color;
+                alert.innerHTML = `<i class="bi ${icon}"></i> ${message}`;
+                document.body.appendChild(alert);
+                
+                // Auto-supprimer après 4 secondes
+                setTimeout(() => {
+                    alert.style.animation = 'slideOut 0.4s ease';
+                    setTimeout(() => alert.remove(), 400);
+                }, 4000);
+            }
+        };
+
+        /* ============================================
+           4. INITIALISATION
+           ============================================ */
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('🚀 SecureNet - Page de connexion');
+            ThemeManager.init();
+            LanguageManager.init();
+            AuthManager.init();
+        });
+
+        // Écouter les changements de thème du système
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+            if (!localStorage.getItem(CONFIG.themeKey)) {
+                ThemeManager.applyTheme(e.matches ? 'dark' : 'light');
+            }
+        });
+    </script>
+
+</body>
+</html>

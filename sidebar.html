@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Votre CSS -->
+    <link rel="stylesheet" href="sidebar.css">
+    
+    <title>SecureNet · Administration</title>
+</head>
+<body>
+
+<!-- ===== SIDEBAR ===== -->
+<div class="sidebar" id="sidebar">
+    <!-- Logo -->
+    <div class="sidebar-brand">
+        <i class="bi bi-shield-lock-fill"></i>
+        <span>Secure<span>Net</span></span>
+    </div>
+
+    <!-- Menu -->
+    <nav class="sidebar-nav">
+        <ul>
+            <li class="active">
+                <a href="#" data-section="dashboard">
+                    <i class="bi bi-grid-1x2-fill"></i>
+                    <span>Tableau de bord</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" data-section="specialistes">
+                    <i class="bi bi-people-fill"></i>
+                    <span>Spécialistes</span>
+                    <span class="badge">12</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" data-section="demandes">
+                    <i class="bi bi-file-earmark-text-fill"></i>
+                    <span>Demandes</span>
+                    <span class="badge badge-warning">8</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" data-section="clients">
+                    <i class="bi bi-person-fill"></i>
+                    <span>Clients</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" data-section="statistiques">
+                    <i class="bi bi-bar-chart-fill"></i>
+                    <span>Statistiques</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" data-section="parametres">
+                    <i class="bi bi-gear-fill"></i>
+                    <span>Paramètres</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Bas du sidebar -->
+    <div class="sidebar-footer">
+        <a href="accueil.html">
+            <i class="bi bi-box-arrow-right"></i>
+            <span>Déconnexion</span>
+        </a>
+    </div>
+</div>
+
+<!-- ===== CONTENU PRINCIPAL ===== -->
+<div class="main-content">
+
+    <!-- ===== HEADER ===== -->
+    <header class="main-header">
+        <div class="header-left">
+            <button id="toggleSidebar" class="btn-toggle">
+                <i class="bi bi-list"></i>
+            </button>
+            <h2 id="pageTitle">Tableau de bord</h2>
+        </div>
+        <div class="header-right">
+            <!-- Bouton Jour/Nuit -->
+            <button id="theme-toggle" aria-label="Basculer le mode sombre">
+                🌙
+            </button>
+            <!-- Sélecteur de langue -->
+            <select id="language-selector">
+                <option value="fr">🇫🇷 FR</option>
+                <option value="en">🇬🇧 EN</option>
+            </select>
+            <!-- Profil -->
+            <div class="profile">
+                <i class="bi bi-person-circle"></i>
+                <span>Admin</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- ===== CONTENU ===== -->
+    <div class="content">
+
+        <!-- SECTION : DASHBOARD -->
+        <section id="section-dashboard" class="section-content active">
+            <!-- Statistiques -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon green">
+                        <i class="bi bi-people-fill"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>24</h3>
+                        <p>Spécialistes</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon blue">
+                        <i class="bi bi-file-earmark-text-fill"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>156</h3>
+                        <p>Demandes totales</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon yellow">
+                        <i class="bi bi-clock-fill"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>8</h3>
+                        <p>En attente</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon red">
+                        <i class="bi bi-check-circle-fill"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>142</h3>
+                        <p>Terminées</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Activité récente -->
+            <div class="card">
+                <div class="card-header">
+                    <h5><i class="bi bi-clock-history me-2"></i>Activité récente</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="activity-list">
+                        <li>
+                            <span class="activity-dot green"></span>
+                            <span class="activity-text">Nouveau spécialiste ajouté : <strong>Jean Dupont</strong></span>
+                            <span class="activity-time">Il y a 5 min</span>
+                        </li>
+                        <li>
+                            <span class="activity-dot blue"></span>
+                            <span class="activity-text">Demande #1023 mise à jour par <strong>Marie Curie</strong></span>
+                            <span class="activity-time">Il y a 1h</span>
+                        </li>
+                        <li>
+                            <span class="activity-dot yellow"></span>
+                            <span class="activity-text">Nouvelle demande de <strong>Client SAS</strong></span>
+                            <span class="activity-time">Il y a 3h</span>
+                        </li>
+                        <li>
+                            <span class="activity-dot red"></span>
+                            <span class="activity-text">Alerte : Spécialiste <strong>Pierre Martin</strong> en retard</span>
+                            <span class="activity-time">Il y a 5h</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION : SPÉCIALISTES -->
+        <section id="section-specialistes" class="section-content">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h4><i class="bi bi-people-fill me-2"></i>Gestion des spécialistes</h4>
+                <button class="btn btn-primary" id="btnAddSpecialiste">
+                    <i class="bi bi-plus-circle"></i> Ajouter
+                </button>
+            </div>
+
+            <!-- Tableau des spécialistes -->
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nom</th>
+                            <th>Spécialité</th>
+                            <th>Email</th>
+                            <th>Téléphone</th>
+                            <th>Statut</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="specialistesTableBody">
+                        <!-- Les données sont chargées par JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- SECTION : DEMANDES -->
+        <section id="section-demandes" class="section-content">
+            <h4><i class="bi bi-file-earmark-text-fill me-2"></i>Demandes en cours</h4>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Client</th>
+                            <th>Spécialiste</th>
+                            <th>Type</th>
+                            <th>Statut</th>
+                            <th>Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>#1023</td>
+                            <td>Marie Dupont</td>
+                            <td>Jean Martin</td>
+                            <td>Installation</td>
+                            <td><span class="status-badge warning">En cours</span></td>
+                            <td>14/08/2026</td>
+                            <td><button class="btn btn-sm btn-outline-primary">Voir</button></td>
+                        </tr>
+                        <tr>
+                            <td>#1022</td>
+                            <td>TechCorp</td>
+                            <td>Sophie Bernard</td>
+                            <td>Sécurité</td>
+                            <td><span class="status-badge success">Terminé</span></td>
+                            <td>13/08/2026</td>
+                            <td><button class="btn btn-sm btn-outline-primary">Voir</button></td>
+                        </tr>
+                        <tr>
+                            <td>#1021</td>
+                            <td>Startup XYZ</td>
+                            <td>Non assigné</td>
+                            <td>Audit</td>
+                            <td><span class="status-badge danger">Urgent</span></td>
+                            <td>13/08/2026</td>
+                            <td><button class="btn btn-sm btn-outline-primary">Voir</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- SECTION : CLIENTS -->
+        <section id="section-clients" class="section-content">
+            <h4><i class="bi bi-person-fill me-2"></i>Clients</h4>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="client-card">
+                        <div class="client-avatar">JD</div>
+                        <h5>Jean Dupont</h5>
+                        <p>jean@entreprise.com</p>
+                        <span class="status-badge success">Actif</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="client-card">
+                        <div class="client-avatar">MC</div>
+                        <h5>Marie Curie</h5>
+                        <p>marie@societe.fr</p>
+                        <span class="status-badge warning">En attente</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="client-card">
+                        <div class="client-avatar">PM</div>
+                        <h5>Pierre Martin</h5>
+                        <p>pierre@tech.com</p>
+                        <span class="status-badge success">Actif</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION : STATISTIQUES -->
+        <section id="section-statistiques" class="section-content">
+            <h4><i class="bi bi-bar-chart-fill me-2"></i>Statistiques</h4>
+            <div class="stats-chart">
+                <div class="chart-placeholder">
+                    <i class="bi bi-bar-chart-line" style="font-size: 3rem; opacity: 0.3;"></i>
+                    <p>Graphiques en cours de développement</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION : PARAMÈTRES -->
+        <section id="section-parametres" class="section-content">
+            <h4><i class="bi bi-gear-fill me-2"></i>Paramètres</h4>
+            <div class="card">
+                <div class="card-body">
+                    <form>
+                        <div class="mb-3">
+                            <label class="form-label">Nom du site</label>
+                            <input type="text" class="form-control" value="SecureNet">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Email de contact</label>
+                            <input type="email" class="form-control" value="admin@securenet.com">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Thème par défaut</label>
+                            <select class="form-select">
+                                <option value="auto">Automatique</option>
+                                <option value="light">Clair</option>
+                                <option value="dark">Sombre</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Enregistrer</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</div>
+
+<!-- ===== MODAL AJOUTER SPÉCIALISTE ===== -->
+<div class="modal fade" id="specialisteModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="bi bi-person-plus me-2"></i>Ajouter un spécialiste</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="specialisteForm">
+                    <div class="mb-3">
+                        <label class="form-label">Nom complet</label>
+                        <input type="text" class="form-control" id="specNom" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Spécialité</label>
+                        <select class="form-select" id="specSpecialite">
+                            <option value="Réseau">Réseau</option>
+                            <option value="Sécurité">Sécurité</option>
+                            <option value="Vidéosurveillance">Vidéosurveillance</option>
+                            <option value="Audit">Audit</option>
+                            <option value="Cloud">Cloud</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" id="specEmail" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Téléphone</label>
+                        <input type="tel" class="form-control" id="specTel">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Statut</label>
+                        <select class="form-select" id="specStatut">
+                            <option value="actif">Actif</option>
+                            <option value="en-attente">En attente</option>
+                            <option value="inactif">Inactif</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                <button type="button" class="btn btn-primary" id="btnSaveSpecialiste">Enregistrer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ===== JAVASCRIPT ===== -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="sidebar.js"></script>
+
+</body>
+</html>

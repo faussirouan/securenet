@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Votre CSS -->
+    <link rel="stylesheet" href="accueil.css">
+    
+    <title>SecureNet · Accueil</title>
+</head>
+<body>
+
+<div class="container-fluid px-0">
+
+    <!-- ===== EN-TÊTE AVEC LES BOUTONS ===== -->
+    <header>
+        <div class="header-controls">
+            <!-- Bouton Jour/Nuit -->
+            <button id="theme-toggle" aria-label="Basculer le mode sombre">
+                🌙
+            </button>
+
+            <!-- Sélecteur de langue -->
+            <select id="language-selector">
+                <option value="fr">🇫🇷 Français</option>
+                <option value="en">🇬🇧 English</option>
+            </select>
+        </div>
+    </header>
+
+    <!-- ===== HERO SECTION ===== -->
+    <div class="hero-section">
+        <div class="container">
+            <h1 class="hero-title">
+                Bienvenue sur Secure<span class="highlight">Net</span>
+            </h1>
+            <p class="hero-sub">
+                <i class="bi bi-hdd-network me-2 text-success"></i>
+                <span data-i18n="subtitle">Installation réseau, sécurité IT et bien plus encore.</span>
+            </p>
+            <p class="hero-sub text-info" style="font-size:1.1rem; margin-top:0.25rem;">
+                <span data-i18n="how_it_works">Alors, comment ça marche ?</span> <strong data-i18n="simple">C'est simple !</strong>
+            </p>
+        </div>
+    </div>
+
+    <!-- ===== ÉTAPES ===== -->
+    <div class="steps-section">
+        <div class="container">
+            <div class="row g-4 justify-content-center">
+
+                <!-- Étape 1 - VERT -->
+                <div class="col-md-4">
+                    <div class="step-card">
+                        <div class="step-number green">1</div>
+                        <p class="step-text">
+                            <strong data-i18n="step1_title">Le client</strong><br>
+                            <span class="muted" data-i18n="step1_desc">remplit le formulaire avant de passer une demande</span>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Étape 2 - VERT -->
+                <div class="col-md-4">
+                    <div class="step-card">
+                        <div class="step-number green">2</div>
+                        <p class="step-text">
+                            <strong data-i18n="step2_title">La demande</strong><br>
+                            <span class="muted" data-i18n="step2_desc">est enregistrée dans une base en ligne (Supabase)</span>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Étape 3 - ROUGE -->
+                <div class="col-md-4">
+                    <div class="step-card">
+                        <div class="step-number red">3</div>
+                        <p class="step-text">
+                            <strong data-i18n="step3_title">Le technicien ou l'administrateur</strong><br>
+                            <span class="muted" data-i18n="step3_desc">consulte le dashboard protégé par un mot de passe</span>
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== VOUS ÊTES ? ===== -->
+    <div class="role-section">
+        <div class="container">
+            <h2 class="role-title">
+                <span data-i18n="you_are">Vous êtes</span> <span class="highlight">?</span>
+            </h2>
+
+            <div class="row g-4 justify-content-center">
+
+                <!-- CLIENT - VERT -->
+                <div class="col-md-5 col-lg-4">
+                    <a href="index.html" class="role-card text-decoration-none">
+                        <div class="icon-circle green">
+                            <i class="bi bi-person"></i>
+                        </div>
+                        <div class="role-name" data-i18n="client">Client</div>
+                        <p class="role-desc">
+                            <span class="highlight" data-i18n="ask_audit">Demander un audit</span>
+                        </p>
+                    </a>
+                </div>
+
+                <!-- TECHNICIEN - ROUGE -->
+                <div class="col-md-5 col-lg-4">
+                    <a href="connexionadmin.html" class="role-card text-decoration-none" id="btnTech">
+                        <div class="icon-circle red">
+                            <i class="bi bi-cpu"></i>
+                        </div>
+                        <div class="role-name" data-i18n="tech">Technicien/Administrateur</div>
+                        <p class="role-desc">
+                            <span class="highlight-red" data-i18n="access_dashboard">Accéder au dashboard</span>
+                        </p>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== FOOTER ===== -->
+    <div class="footer-bar">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6 text-center text-md-start text-muted">
+                    <i class="bi bi-shield-lock me-1 text-success"></i>
+                    <span data-i18n="footer_left">SecureNet · protection IT</span>
+                </div>
+                <div class="col-md-6 text-center text-md-end text-muted">
+                    <i class="bi bi-arrow-right me-1 text-success"></i>
+                    <span data-i18n="footer_right">Sécurité réseau &amp; vidéosurveillance</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- ===== JAVASCRIPT ===== -->
+<script src="accueil.js"></script>
+
+</body>
+</html>
