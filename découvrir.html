@@ -9,7 +9,152 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
   <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <title>SecureNet · Découvrir nos services</title>
-    <link rel="stylesheet" href="découvrir.css">
+  <link rel="stylesheet" href="découvrir.css">
+  <style>
+    /* ====== STYLES UNIQUEMENT POUR LE FIELDSET ====== */
+    fieldset {
+      background: var(--panel, #161B22);
+      border: 1px solid var(--border, #232B38) !important;
+      border-radius: 10px;
+      padding: 22px 20px !important;
+      width: 100%;
+    }
+    fieldset h5 {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--text-dim, #7D8590);
+      margin-bottom: 16px;
+      text-align: left;
+    }
+    .bonj {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px dashed rgba(255,255,255,0.06);
+      font-size: 0.82rem;
+      gap: 8px;
+    }
+    .bonj:last-child {
+      border-bottom: none;
+    }
+    .bonj span:first-child {
+      color: var(--text-dim, #7D8590);
+      flex-shrink: 0;
+    }
+    .bonj .espace,
+    .bonj .espace1,
+    .bonj .espace2,
+    .bonj .espace3 {
+      font-weight: 500;
+      text-align: right;
+      flex-shrink: 0;
+    }
+    .bonj .espace.text-success,
+    .bonj .espace2.text-success {
+      color: var(--secure, #3FB950) !important;
+    }
+    .bonj .espace { color: var(--alert, #E5484D); }
+    .bonj .espace1 { color: var(--alert, #E5484D); }
+    .bonj .espace3 { color: var(--alert, #E5484D); }
+    fieldset p {
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border, #232B38);
+      font-size: 0.78rem;
+      color: var(--text-dim, #7D8590);
+      font-family: 'IBM Plex Mono', monospace;
+      text-align: left;
+    }
+
+    /* ====== RESPONSIVE FIELDSET ====== */
+
+    /* Tablettes */
+    @media (max-width: 768px) {
+      fieldset {
+        padding: 16px 14px !important;
+      }
+      fieldset h5 {
+        font-size: 0.78rem;
+      }
+      .bonj {
+        font-size: 0.76rem;
+        padding: 6px 0;
+        gap: 6px;
+      }
+      .bonj .espace,
+      .bonj .espace1,
+      .bonj .espace2,
+      .bonj .espace3 {
+        font-size: 0.72rem;
+        max-width: 55%;
+        word-break: break-word;
+      }
+      fieldset p {
+        font-size: 0.72rem;
+      }
+    }
+
+    /* Mobiles */
+    @media (max-width: 576px) {
+      fieldset {
+        padding: 12px 10px !important;
+        border-radius: 8px;
+      }
+      fieldset h5 {
+        font-size: 0.7rem;
+        margin-bottom: 10px;
+      }
+      .bonj {
+        font-size: 0.68rem;
+        padding: 5px 0;
+        gap: 4px;
+        flex-wrap: wrap;
+        justify-content: space-between;
+      }
+      .bonj span:first-child {
+        font-size: 0.68rem;
+      }
+      .bonj .espace,
+      .bonj .espace1,
+      .bonj .espace2,
+      .bonj .espace3 {
+        font-size: 0.65rem;
+        max-width: 60%;
+        text-align: right;
+      }
+      fieldset p {
+        font-size: 0.65rem;
+        margin-top: 10px;
+        padding-top: 8px;
+      }
+    }
+
+    /* Très petits mobiles */
+    @media (max-width: 400px) {
+      fieldset {
+        padding: 10px 8px !important;
+      }
+      .bonj {
+        font-size: 0.62rem;
+        padding: 4px 0;
+        gap: 2px;
+      }
+      .bonj span:first-child {
+        font-size: 0.62rem;
+      }
+      .bonj .espace,
+      .bonj .espace1,
+      .bonj .espace2,
+      .bonj .espace3 {
+        font-size: 0.58rem;
+        max-width: 55%;
+      }
+      fieldset p {
+        font-size: 0.58rem;
+      }
+    }
+  </style>
 </head>
 <body>
 
@@ -39,7 +184,7 @@
             </div>
             <h3 class="service-title">Audits</h3>
             <p class="service-desc">
-              On identifie les failles <strong>avant</strong> qu’un incident ne les relève : 
+              On identifie les failles <strong>avant</strong> qu'un incident ne les relève : 
               ports ouverts, mots de passe faibles, vulnérabilités connues, 
               chiffrement absent, et bien plus.
             </p>
@@ -73,7 +218,7 @@
             <p class="service-desc">
               Des <strong>forfaits sur mesure</strong> pour protéger vos locaux 
               24h/24. Caméras haute définition, stockage sécurisé, 
-              et accès à distance pour une tranquillité d’esprit totale.
+              et accès à distance pour une tranquillité d'esprit totale.
             </p>
             <span class="service-tag"><i class="bi bi-arrow-right me-1"></i> Sur devis</span>
           </div>
@@ -90,7 +235,7 @@
         <div class="col-md-8">
           <h4>Une approche 100% locale</h4>
           <p>
-            Nous intervenons partout au Cameroun avec une équipe d’experts passionnés. 
+            Nous intervenons partout au Cameroun avec une équipe d'experts passionnés. 
             Réactivité, transparence et solutions adaptées à votre réalité.
           </p>
         </div>
@@ -240,15 +385,31 @@
           <p><h4>faites vérifier votre réseau</h4></p>
         </div>
         <div class="col-md-6">
-          <fieldset class="p-3 text-center " >
-            <h5>Audit réseau.log</h5>
-            <div class="bonj">Pare-feu<span class="espace text-success">✔actif</span></div>
-            <div class="bonj">port ouverts non sécurisées<span class="espace "> 3 menaces détectés</span></div>
-            <div class="bonj">mot de passe routeur<span class="espace1">par défaut</span></div>
-            <div class="bonj">chiffrement wi-fi<span class="espace2 text-success">✔ WPA3</span></div>
-            <div class="bonj">vidéosurveillance<span class="espace3">non installé</span></div>
-            <p>➡3 vulnérabilités trouvés.Un techinicien <br>Securenet peut intervenir.</p>
-          </fieldset>
+         <!-- ====== FIELDSET AUDIT RESPONSIVE ====== -->
+  <fieldset class="text-center">
+    <h5>📁 Audit réseau.log</h5>
+    <div class="bonj">
+      <span>Pare-feu</span>
+      <span class="espace text-success">✔ actif</span>
+    </div>
+    <div class="bonj">
+      <span>Ports ouverts non sécurisés</span>
+      <span class="espace">⚠ 3 menaces détectés</span>
+    </div>
+    <div class="bonj">
+      <span>Mot de passe routeur</span>
+      <span class="espace1">⚠ par défaut</span>
+    </div>
+    <div class="bonj">
+      <span>Chiffrement Wi-Fi</span>
+      <span class="espace2 text-success">✔ WPA3</span>
+    </div>
+    <div class="bonj">
+      <span>Vidéosurveillance</span>
+      <span class="espace3">⚠ non installé</span>
+    </div>
+    <p>➡ 3 vulnérabilités trouvées. Un technicien SecureNet peut intervenir.</p>
+  </fieldset>
         </div>
         <div class="col-md-6">
        <!-- ==========================================

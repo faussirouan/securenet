@@ -10,6 +10,7 @@
       font-family: 'Inter', sans-serif;
       color: #e8edf5;
     }
+    
 
     .hero-services {
       background: linear-gradient(145deg, #0d850d 50%, #16231e 50%);
@@ -195,32 +196,8 @@ width: 90%;
 height: 20%;
 gap: 500px;
 }
-    fieldset{
-            border:1px solid #99c0b0;
-            background-color: transparent;
-            width: 100%;
-            border-radius: 11px;
-            height: 450px;
-          }
-        .bonj{
-          width: 500px;
-          background-color: rgb(24, 26, 25);
-          border-radius: 15px;
-          justify-content: center;
-          align-items: center;
-          padding: 12px;
-          margin: 15px;
-        }
-        .espace{
-          margin-left: 80px;
-                    color: red;
-
-        }
-        .espace1,.espace2,.espace3{
-          margin-left: 200px;
-                    color: red;
-
-        }
+   
+    
             /* ---------- <s>
         /* ============================================
                    BOUTON MODAL À INTÉGRER DANS VOTRE PAGE
@@ -494,3 +471,4 @@ gap: 500px;
         font-size: 1.4rem;
       }
     }
+   
