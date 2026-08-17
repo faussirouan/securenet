@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
+    <!-- Google Fonts - Montserrat -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <title>SecureNet · Accueil</title>
+
+    <style>
+        :root {
+            --primary-green: #037f00;
+            --primary-dark: #000000;
+            --primary-dark-light: #0a0a0a;
+            --primary-dark-hover: #1a1a1a;
+            --text-light: #ffffff;
+            --text-muted: #aaaaaa;
+            --hover-red: red;
+            --hover-green: #00e676;
+            --bg-body: #000000;
+            --bg-card: #0a0a0a;
+            --border-color: rgba(3, 127, 0, 0.2);
+        }
+
+        [data-theme="light"] {
+            --primary-dark: #f5f5f5;
+            --primary-dark-light: #ffffff;
+            --primary-dark-hover: #e8e8e8;
+            --text-light: #1a1a1a;
+            --text-muted: #555555;
+            --bg-body: #f5f5f5;
+            --bg-card: #ffffff;
+            --border-color: rgba(3, 127, 0, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--bg-body);
+            color: var(--text-light);
+            font-family: 'Montserrat', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .ma-boite {
+            flex: 1;
+        }
+
+        header {
+            padding: 20px 40px;
+            background: var(--primary-dark);
+            border-bottom: 2px solid var(--primary-green);
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 20px;
+            transition: background 0.3s ease;
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        #theme-toggle {
+            background: transparent;
+            border: 2px solid var(--primary-green);
+            color: var(--primary-green);
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #theme-toggle:hover {
+            background: var(--hover-red);
+            color: white;
+            border-color: var(--hover-red);
+            transform: rotate(20deg);
+        }
+
+        #language-selector {
+            background: var(--primary-dark-light);
+            color: var(--text-light);
+            border: 2px solid var(--primary-green);
+            border-radius: 8px;
+            padding: 8px 15px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        #language-selector:hover {
+            background: var(--hover-green);
+            color: var(--primary-dark);
+            border-color: var(--hover-green);
+        }
+
+        /* ===== ANIMATION D'APPARITION UN PAR UN ===== */
+        .fade-item {
+            opacity: 0;
+            transform: translateY(40px) scale(0.95);
+            filter: blur(8px);
+            transition: all 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .fade-item.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            filter: blur(0px);
+        }
+
+        /* Délais pour chaque élément */
+        .fade-item:nth-child(1) { transition-delay: 0.05s; }
+        .fade-item:nth-child(2) { transition-delay: 0.15s; }
+        .fade-item:nth-child(3) { transition-delay: 0.25s; }
+        .fade-item:nth-child(4) { transition-delay: 0.35s; }
+        .fade-item:nth-child(5) { transition-delay: 0.45s; }
+        .fade-item:nth-child(6) { transition-delay: 0.55s; }
+        .fade-item:nth-child(7) { transition-delay: 0.65s; }
+        .fade-item:nth-child(8) { transition-delay: 0.75s; }
+        .fade-item:nth-child(9) { transition-delay: 0.85s; }
+        .fade-item:nth-child(10) { transition-delay: 0.95s; }
+
+        /* ===== HERO SECTION ===== */
+        .hero-section {
+            padding: 80px 20px 60px;
+            text-align: center;
+            background: linear-gradient(180deg, var(--primary-dark) 0%, var(--primary-dark-light) 100%);
+            border-bottom: 1px solid var(--border-color);
+            transition: background 0.3s ease;
+        }
+
+        .hero-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: var(--text-light);
+            margin-bottom: 15px;
+            letter-spacing: -1px;
+            transition: color 0.3s ease;
+        }
+
+        .hero-title .highlight {
+            color: var(--primary-green);
+            text-shadow: 0 0 40px rgba(3, 127, 0, 0.4);
+        }
+
+        .hero-sub {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto;
+            font-weight: 400;
+            transition: color 0.3s ease;
+        }
+
+        /* ===== ÉTAPES ===== */
+        .steps-section {
+            padding: 60px 20px;
+            background: var(--bg-body);
+            transition: background 0.3s ease;
+        }
+
+        .step-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 30px 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+
+        .step-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-green);
+            box-shadow: 0 10px 40px rgba(3, 127, 0, 0.2);
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: 800;
+            font-family: 'Montserrat', sans-serif;
+            margin: 0 auto 15px;
+            color: var(--primary-dark);
+            transition: all 0.3s;
+        }
+
+        .step-number.green {
+            background: var(--primary-green);
+        }
+
+        .step-number.red {
+            background: red;
+            color: white;
+        }
+
+        .step-card:hover .step-number.green {
+            background: var(--hover-green);
+            transform: scale(1.1);
+        }
+
+        .step-card:hover .step-number.red {
+            background: var(--hover-red);
+            transform: scale(1.1);
+        }
+
+        .step-text {
+            font-size: 1rem;
+            color: var(--text-muted);
+            margin: 0;
+            font-weight: 400;
+            transition: color 0.3s ease;
+        }
+
+        .step-text strong {
+            color: var(--text-light);
+            font-weight: 700;
+            transition: color 0.3s ease;
+        }
+
+        /* ===== RÔLES ===== */
+        .role-section {
+            padding: 60px 20px 80px;
+            background: var(--primary-dark-light);
+            transition: background 0.3s ease;
+        }
+
+        .role-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-align: center;
+            color: var(--text-light);
+            margin-bottom: 50px;
+            transition: color 0.3s ease;
+        }
+
+        .role-title .highlight {
+            color: var(--primary-green);
+        }
+
+        .role-card {
+            background: var(--bg-body);
+            border: 2px solid var(--border-color);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            display: block;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .role-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--primary-green);
+            box-shadow: 0 15px 50px rgba(3, 127, 0, 0.2);
+        }
+
+        .icon-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 35px;
+            transition: all 0.3s;
+        }
+
+        .icon-circle.green {
+            background: var(--primary-green);
+            color: var(--primary-dark);
+        }
+
+        .icon-circle.red {
+            background: red;
+            color: white;
+        }
+
+        .role-card:hover .icon-circle.green {
+            background: var(--hover-green);
+            box-shadow: 0 0 40px rgba(0, 230, 118, 0.4);
+            transform: scale(1.05);
+        }
+
+        .role-card:hover .icon-circle.red {
+            background: var(--hover-red);
+            box-shadow: 0 0 40px rgba(255, 23, 68, 0.4);
+            transform: scale(1.05);
+        }
+
+        .role-name {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-light);
+            margin-bottom: 10px;
+            transition: color 0.3s ease;
+        }
+
+        .role-desc {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin: 0;
+            font-weight: 400;
+            transition: color 0.3s ease;
+        }
+
+        .role-desc .highlight {
+            color: var(--primary-green);
+        }
+
+        .role-desc .highlight-red {
+            color: red;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer-main {
+            background: var(--primary-dark);
+            border-top: 2px solid var(--primary-green);
+            padding: 40px 20px 30px;
+            margin-top: auto;
+            transition: background 0.3s ease;
+        }
+
+        .footer-main .footer-brand {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--text-light);
+            letter-spacing: -0.5px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-main .footer-brand span {
+            color: var(--primary-green);
+        }
+
+        .footer-main .footer-text {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            font-weight: 400;
+            transition: color 0.3s ease;
+        }
+
+        .footer-main .footer-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-main .footer-links li {
+            margin-bottom: 8px;
+        }
+
+        .footer-main .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+            font-weight: 400;
+        }
+
+        .footer-main .footer-links a:hover {
+            color: var(--primary-green);
+            padding-left: 8px;
+        }
+
+        .footer-main .footer-social a {
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            margin-right: 15px;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+
+        .footer-main .footer-social a:hover {
+            color: var(--primary-green);
+            transform: translateY(-3px) scale(1.1);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
+            margin-top: 20px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-weight: 400;
+            transition: color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .footer-bottom i {
+            color: var(--primary-green);
+        }
+
+        /* ===== OVERLAY ===== */
+        #choiceOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            background: rgba(0, 0, 0, 0.88);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+
+        #choiceOverlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        #choiceOverlay .box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 22px;
+            padding: 30px;
+        }
+
+        #choiceOverlay .item {
+            opacity: 0;
+            transform: translateY(35px) scale(0.95);
+            filter: blur(10px);
+            transition: all 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        #choiceOverlay.show .item:nth-child(1) { 
+            opacity: 1; 
+            transform: translateY(0) scale(1);
+            filter: blur(0px);
+            transition-delay: 0.05s; 
+        }
+        #choiceOverlay.show .item:nth-child(2) { 
+            opacity: 1; 
+            transform: translateY(0) scale(1);
+            filter: blur(0px);
+            transition-delay: 0.20s; 
+        }
+        #choiceOverlay.show .item:nth-child(3) { 
+            opacity: 1; 
+            transform: translateY(0) scale(1);
+            filter: blur(0px);
+            transition-delay: 0.40s; 
+        }
+        #choiceOverlay.show .item:nth-child(4) { 
+            opacity: 1; 
+            transform: translateY(0) scale(1);
+            filter: blur(0px);
+            transition-delay: 0.60s; 
+        }
+        #choiceOverlay.show .item:nth-child(5) { 
+            opacity: 1; 
+            transform: translateY(0) scale(1);
+            filter: blur(0px);
+            transition-delay: 0.80s; 
+        }
+
+        #choiceOverlay .title {
+            color: var(--primary-green);
+            font-size: 30px;
+            font-weight: 800;
+            font-family: 'Montserrat', sans-serif;
+            text-align: center;
+            text-shadow: 0 0 50px rgba(3, 127, 0, 0.35);
+        }
+
+        #choiceOverlay .subtitle {
+            color: var(--text-muted);
+            font-size: 17px;
+            font-family: 'Montserrat', sans-serif;
+            text-align: center;
+        }
+
+        #choiceOverlay .btn-choice {
+            padding: 16px 50px;
+            font-size: 19px;
+            font-weight: 700;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            width: 260px;
+            transition: all 0.3s ease;
+        }
+
+        #choiceOverlay .btn-choice:hover {
+            transform: scale(1.05) !important;
+        }
+
+        #choiceOverlay .btn-tech {
+            background: var(--primary-green);
+            color: var(--primary-dark);
+        }
+
+        #choiceOverlay .btn-tech:hover {
+            background: var(--hover-red);
+            color: white;
+        }
+
+        #choiceOverlay .btn-admin {
+            background: var(--primary-dark-light);
+            color: var(--primary-green);
+            border: 2px solid var(--primary-green);
+        }
+
+        #choiceOverlay .btn-admin:hover {
+            background: var(--hover-green);
+            color: var(--primary-dark);
+            border-color: var(--hover-green);
+        }
+
+        #choiceOverlay .badge-secure {
+            background: rgba(3, 127, 0, 0.12);
+            color: rgba(3, 127, 0, 0.85);
+            padding: 6px 22px;
+            border-radius: 30px;
+            font-size: 14px;
+            border: 1px solid rgba(3, 127, 0, 0.2);
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        #choiceOverlay .close-btn {
+            position: absolute;
+            top: 30px;
+            right: 40px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: var(--text-muted);
+            font-size: 26px;
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: scale(0.8);
+        }
+
+        #choiceOverlay.show .close-btn {
+            opacity: 1;
+            transform: scale(1);
+            transition-delay: 0.50s;
+        }
+
+        #choiceOverlay .close-btn:hover {
+            background: var(--hover-red);
+            color: white;
+            transform: rotate(90deg) scale(1.1);
+        }
+
+        .reopen-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--primary-green);
+            color: var(--primary-dark);
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 28px;
+            cursor: pointer;
+            transition: all 0.3s;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(3, 127, 0, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .reopen-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 30px rgba(3, 127, 0, 0.6);
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 20px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .hero-title {
+                font-size: 2.2rem;
+            }
+            .hero-section {
+                padding: 50px 15px 40px;
+            }
+            .role-title {
+                font-size: 2rem;
+            }
+            #choiceOverlay .btn-choice {
+                width: 90%;
+                max-width: 300px;
+                padding: 14px 25px;
+                font-size: 17px;
+            }
+            #choiceOverlay .title {
+                font-size: 22px;
+                padding: 0 15px;
+            }
+            #choiceOverlay .close-btn {
+                top: 18px;
+                right: 18px;
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+            }
+            .footer-main .footer-brand {
+                text-align: center;
+            }
+            .footer-main .footer-links {
+                text-align: center;
+            }
+            .footer-main .footer-social {
+                text-align: center;
+                margin-top: 20px;
+            }
+            .reopen-btn {
+                bottom: 20px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+                font-size: 22px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-title {
+                font-size: 1.8rem;
+            }
+            .step-card {
+                padding: 20px 15px;
+            }
+            .role-card {
+                padding: 25px 20px;
+            }
+            .icon-circle {
+                width: 60px;
+                height: 60px;
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container-fluid px-0 ma-boite">
+
+    <!-- ===== EN-TÊTE ===== -->
+    <header class="fade-item">
+        <div class="header-controls">
+            <button id="theme-toggle" aria-label="Basculer le mode sombre">🌙</button>
+            <select id="language-selector">
+                <option value="fr">🇫🇷 Français</option>
+                <option value="en">🇬🇧 English</option>
+            </select>
+        </div>
+    </header>
+
+    <!-- ===== HERO SECTION ===== -->
+    <div class="hero-section">
+        <div class="container">
+            <h1 class="hero-title fade-item">
+                <span data-i18n="welcome">Bienvenue sur</span> Secure<span class="highlight">Net</span>
+            </h1>
+            <p class="hero-sub fade-item">
+                <i class="bi bi-hdd-network me-2" style="color: var(--primary-green);"></i>
+                <span data-i18n="subtitle">Installation réseau, sécurité IT et bien plus encore.</span>
+            </p>
+            <p class="hero-sub fade-item" style="font-size:1.1rem; margin-top:0.25rem; color: var(--primary-green);">
+                <span data-i18n="how_it_works">Alors, comment ça marche ?</span> <strong data-i18n="simple">C'est simple !</strong>
+            </p>
+        </div>
+    </div>
+
+    <!-- ===== ÉTAPES 1, 2, 3 ===== -->
+    <div class="steps-section">
+        <div class="container">
+            <div class="row g-4 justify-content-center">
+
+                <!-- Étape 1 -->
+                <div class="col-md-4 fade-item">
+                    <div class="step-card">
+                        <div class="step-number green">1</div>
+                        <p class="step-text">
+                            <strong data-i18n="step1_title">Le client</strong><br>
+                            <span class="muted" data-i18n="step1_desc">remplit le formulaire avant de passer une demande</span>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Étape 2 -->
+                <div class="col-md-4 fade-item">
+                    <div class="step-card">
+                        <div class="step-number green">2</div>
+                        <p class="step-text">
+                            <strong data-i18n="step2_title">La demande</strong><br>
+                            <span class="muted" data-i18n="step2_desc">est enregistrée dans une base en ligne (Supabase)</span>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Étape 3 -->
+                <div class="col-md-4 fade-item">
+                    <div class="step-card">
+                        <div class="step-number red">3</div>
+                        <p class="step-text">
+                            <strong data-i18n="step3_title">Le technicien ou l'administrateur</strong><br>
+                            <span class="muted" data-i18n="step3_desc">consulte le dashboard protégé par un mot de passe</span>
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== VOUS ÊTES ? ===== -->
+    <div class="role-section">
+        <div class="container">
+            <h2 class="role-title fade-item">
+                <span data-i18n="you_are">Vous êtes</span> <span class="highlight">?</span>
+            </h2>
+
+            <div class="row g-4 justify-content-center">
+
+                <!-- Client -->
+                <div class="col-md-5 col-lg-4 fade-item">
+                    <a href="connexionclient.html" class="role-card text-decoration-none">
+                        <div class="icon-circle green"><i class="bi bi-person"></i></div>
+                        <div class="role-name" data-i18n="client">Client</div>
+                        <p class="role-desc">
+                            <span class="highlight" data-i18n="ask_audit">Demander un audit</span>
+                        </p>
+                    </a>
+                </div>
+
+                <!-- Technicien/Admin -->
+                <div class="col-md-5 col-lg-4 fade-item">
+                    <a href="#" class="role-card text-decoration-none" onclick="openOverlay(event)">
+                        <div class="icon-circle red"><i class="bi bi-cpu"></i></div>
+                        <div class="role-name" data-i18n="tech">Technicien/Administrateur</div>
+                        <p class="role-desc">
+                            <span class="highlight-red" data-i18n="access_dashboard">Accéder au dashboard</span>
+                        </p>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- ===== OVERLAY ===== -->
+<div id="choiceOverlay">
+    <button class="close-btn" onclick="closeOverlay()">✕</button>
+    <div class="box">
+        <div class="item title">🔐 Accès Technicien/Administrateur</div>
+        <div class="item subtitle">Choisissez votre type de connexion</div>
+        <a href="connexiontechicien.html" class="item btn-choice btn-tech" onclick="handleChoice('tech')">
+            <i class="bi bi-speedometer2"></i> Technicien
+        </a>
+        <a href="connexionadmin.html" class="item btn-choice btn-admin" onclick="handleChoice('admin')">
+            <i class="bi bi-shield-lock"></i> Administrateur
+        </a>
+        <div class="item badge-secure">
+            <i class="bi bi-shield-check me-1"></i> Connexion sécurisée
+        </div>
+    </div>
+</div>
+
+<!-- ===== BOUTON POUR ROUVRIR ===== -->
+<button class="reopen-btn" onclick="openOverlayDirect()" title="Rouvrir le menu">
+    <i class="bi bi-arrow-repeat"></i>
+</button>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer-main">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-6 mb-4 mb-lg-0 fade-item">
+                <div class="footer-brand">Secure<span>Net</span></div>
+                <p class="footer-text mt-2">
+                    <i class="bi bi-shield-lock me-1" style="color: var(--primary-green);"></i>
+                    <span data-i18n="footer_desc">Sécurité réseau &amp; vidéosurveillance</span>
+                </p>
+                <p class="footer-text" style="font-size: 0.85rem;">
+                    <i class="bi bi-geo-alt me-1" style="color: var(--primary-green);"></i> 123 Avenue de la Tech, 75000 Paris
+                </p>
+                <p class="footer-text" style="font-size: 0.85rem;">
+                    <i class="bi bi-envelope me-1" style="color: var(--primary-green);"></i> contact@securenet.fr
+                </p>
+                <p class="footer-text" style="font-size: 0.85rem;">
+                    <i class="bi bi-phone me-1" style="color: var(--primary-green);"></i> +33 1 23 45 67 89
+                </p>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4 mb-lg-0 fade-item">
+                <h6 style="color: var(--primary-green); font-family: 'Montserrat', sans-serif; font-weight: 700;" data-i18n="navigation">Navigation</h6>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="bi bi-chevron-right" style="color: var(--primary-green); font-size: 0.7rem;"></i> <span data-i18n="home">Accueil</span></a></li>
+                    <li><a href="connexionclient.html"><i class="bi bi-chevron-right" style="color: var(--primary-green); font-size: 0.7rem;"></i> <span data-i18n="client_space">Espace Client</span></a></li>
+                    <li><a href="#"><i class="bi bi-chevron-right" style="color: var(--primary-green); font-size: 0.7rem;"></i> <span data-i18n="services">Services</span></a></li>
+                    <li><a href="#"><i class="bi bi-chevron-right" style="color: var(--primary-green); font-size: 0.7rem;"></i> <span data-i18n="contact">Contact</span></a></li>
+                </ul>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4 mb-md-0 fade-item">
+                <h6 style="color: var(--primary-green); font-family: 'Montserrat', sans-serif; font-weight: 700;" data-i18n="services_list">Services</h6>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="bi bi-chevron-right" style="color: var(--primary-green); font-size: 0.7rem;"></i> <span data-i18n="audit">Audit réseau</span></a></li>
+                    <li><a href="#"><i class="bi bi-chevron-right" style="color: var(--primary-green); font-size: 0.7rem;"></i> <span data-i18n="security">Sécurité IT</span></a></li>
+                    <li><a href="#"><i class="bi bi-chevron-right" style="color: var(--primary-green); font-size: 0.7rem;"></i> <span data-i18n="surveillance">Vidéosurveillance</span></a></li>
+                    <li><a href="#"><i class="bi bi-chevron-right" style="color: var(--primary-green); font-size: 0.7rem;"></i> <span data-i18n="support">Support technique</span></a></li>
+                </ul>
+            </div>
+            <div class="col-lg-2 col-md-6 fade-item">
+                <h6 style="color: var(--primary-green); font-family: 'Montserrat', sans-serif; font-weight: 700;" data-i18n="follow_us">Suivez-nous</h6>
+                <div class="footer-social">
+                    <a href="#" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="bi bi-twitter-x"></i></a>
+                    <a href="#" aria-label="GitHub"><i class="bi bi-github"></i></a>
+                    <a href="#" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
+                </div>
+                <div class="mt-3">
+                    <span class="badge" style="background: var(--primary-green); color: white; padding: 8px 15px; font-family: 'Montserrat', sans-serif; font-weight: 600;">
+                        <i class="bi bi-shield-check me-1"></i> SSL Sécurisé
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom fade-item">
+            <p class="mb-0">
+                <i class="bi bi-c-circle me-1"></i> <span data-i18n="copyright">2026 SecureNet — Tous droits réservés.</span>
+                <span class="mx-2">|</span> 
+                <i class="bi bi-shield-fill-check me-1"></i> <span data-i18n="data_protection">Protection des données</span>
+            </p>
+        </div>
+    </div>
+</footer>
+
+<!-- ===== JAVASCRIPT ===== -->
+<script>
+    // ===== ANIMATION D'APPARITION UN PAR UN =====
+    document.addEventListener('DOMContentLoaded', function() {
+        const items = document.querySelectorAll('.fade-item');
+        
+        // Ajouter la classe 'visible' avec un délai progressif
+        items.forEach((item, index) => {
+            setTimeout(() => {
+                item.classList.add('visible');
+            }, 200 + (index * 120)); // 200ms de délai initial + 120ms entre chaque
+        });
+    });
+
+    // ===== OVERLAY =====
+    function openOverlay(e) {
+        if (e) e.preventDefault();
+        document.getElementById('choiceOverlay').classList.add('show');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function openOverlayDirect() {
+        document.getElementById('choiceOverlay').classList.add('show');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeOverlay() {
+        document.getElementById('choiceOverlay').classList.remove('show');
+        document.body.style.overflow = '';
+    }
+
+    function handleChoice(type) {
+        closeOverlay();
+        setTimeout(function() {
+            if (type === 'tech') {
+                window.location.href = 'connexiontechicien.html';
+            } else {
+                window.location.href = 'connexionadmin.html';
+            }
+        }, 350);
+    }
+
+    document.getElementById('choiceOverlay').addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeOverlay();
+        }
+    });
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeOverlay();
+        }
+    });
+
+    // ===== MODE JOUR/NUIT =====
+    document.addEventListener('DOMContentLoaded', function() {
+        const themeToggle = document.getElementById('theme-toggle');
+        const currentTheme = localStorage.getItem('theme') || 'dark';
+        
+        if (currentTheme === 'light') {
+            document.documentElement.setAttribute('data-theme', 'light');
+            themeToggle.textContent = '☀️';
+        } else {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            themeToggle.textContent = '🌙';
+        }
+
+        themeToggle.addEventListener('click', function() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            let newTheme;
+            if (currentTheme === 'dark') {
+                newTheme = 'light';
+                this.textContent = '☀️';
+            } else {
+                newTheme = 'dark';
+                this.textContent = '🌙';
+            }
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        });
+    });
+
+    // ===== TRADUCTIONS =====
+    document.addEventListener('DOMContentLoaded', function() {
+        const translations = {
+            fr: {
+                welcome: 'Bienvenue sur',
+                subtitle: 'Installation réseau, sécurité IT et bien plus encore.',
+                how_it_works: 'Alors, comment ça marche ?',
+                simple: 'C\'est simple !',
+                step1_title: 'Le client',
+                step1_desc: 'remplit le formulaire avant de passer une demande',
+                step2_title: 'La demande',
+                step2_desc: 'est enregistrée dans une base en ligne (Supabase)',
+                step3_title: 'Le technicien ou l\'administrateur',
+                step3_desc: 'consulte le dashboard protégé par un mot de passe',
+                you_are: 'Vous êtes',
+                client: 'Client',
+                ask_audit: 'Demander un audit',
+                tech: 'Technicien/Administrateur',
+                access_dashboard: 'Accéder au dashboard',
+                footer_desc: 'Sécurité réseau & vidéosurveillance',
+                navigation: 'Navigation',
+                home: 'Accueil',
+                client_space: 'Espace Client',
+                services: 'Services',
+                contact: 'Contact',
+                services_list: 'Services',
+                audit: 'Audit réseau',
+                security: 'Sécurité IT',
+                surveillance: 'Vidéosurveillance',
+                support: 'Support technique',
+                follow_us: 'Suivez-nous',
+                copyright: '2026 SecureNet — Tous droits réservés.',
+                data_protection: 'Protection des données'
+            },
+            en: {
+                welcome: 'Welcome to',
+                subtitle: 'Network installation, IT security and much more.',
+                how_it_works: 'So, how does it work?',
+                simple: 'It\'s simple!',
+                step1_title: 'The client',
+                step1_desc: 'fills out the form before submitting a request',
+                step2_title: 'The request',
+                step2_desc: 'is saved in an online database (Supabase)',
+                step3_title: 'The technician or administrator',
+                step3_desc: 'consults the password-protected dashboard',
+                you_are: 'You are',
+                client: 'Client',
+                ask_audit: 'Request an audit',
+                tech: 'Technician/Administrator',
+                access_dashboard: 'Access the dashboard',
+                footer_desc: 'Network security & video surveillance',
+                navigation: 'Navigation',
+                home: 'Home',
+                client_space: 'Client Space',
+                services: 'Services',
+                contact: 'Contact',
+                services_list: 'Services',
+                audit: 'Network audit',
+                security: 'IT Security',
+                surveillance: 'Video surveillance',
+                support: 'Technical support',
+                follow_us: 'Follow us',
+                copyright: '2026 SecureNet — All rights reserved.',
+                data_protection: 'Data protection'
+            }
+        };
+
+        const langSelector = document.getElementById('language-selector');
+        const currentLang = localStorage.getItem('language') || 'fr';
+        langSelector.value = currentLang;
+
+        function updateLang(lang) {
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    el.textContent = translations[lang][key];
+                }
+            });
+            localStorage.setItem('language', lang);
+        }
+
+        updateLang(currentLang);
+        langSelector.addEventListener('change', function() {
+            updateLang(this.value);
+        });
+    });
+</script>
+<script src="index.js"></script>
+</body>
+</html>

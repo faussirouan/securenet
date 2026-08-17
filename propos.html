@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SecureNet · À propos</title>
+  <!-- Bootstrap 5 + Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <!-- Google Fonts : Montserrat -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ----------------------------------------------
+        GREEN & BLACK BUTTER THEME — MONT SERRAT
+    ------------------------------------------------ */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: #0b0f0b;
+      color: #e6efe6;
+      line-height: 1.6;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    /* ---- MODE SOMBRE (activé par défaut, mais toggle possible) ---- */
+    body.dark-mode {
+      background-color: #0b0f0b;
+      color: #e6efe6;
+    }
+    body.light-mode {
+      background-color: #f0f7f0;
+      color: #1a2a1a;
+    }
+    body.light-mode .breadcrumb-sn { color: #3a5a3a; }
+    body.light-mode .breadcrumb-sn a { color: #2a6a2a; }
+    body.light-mode .section-eyebrow { color: #3d7a3d; }
+    body.light-mode h1, body.light-mode h2, body.light-mode h3, body.light-mode .fw-semibold { color: #1a2a1a; }
+    body.light-mode .text-dim { color: #3a5a3a; }
+    body.light-mode .value-card { background: #e6f0e6; border-color: #b0c8b0; }
+    body.light-mode .value-card:hover { background: #d8e8d8; border-color: #6a9a6a; }
+    body.light-mode .value-card h3 { color: #1a2a1a; }
+    body.light-mode .team-card { background: #e6f0e6; border-color: #b0c8b0; }
+    body.light-mode .team-card:hover { background: #d8e8d8; border-color: #6a9a6a; }
+    body.light-mode .team-avatar { background: #c8dcc8; color: #1a3a1a; border-color: #6a9a6a; }
+    body.light-mode .card { background: #eaf3ea; border-color: #b8d0b8; color: #1a2a1a; }
+    body.light-mode .card:hover { border-color: #6a9a6a; }
+    body.light-mode .card-body { background: #eaf3ea; }
+    body.light-mode .card-text { color: #1a2a1a; }
+    body.light-mode .footer-dark { background: #dce8dc; border-top-color: #b0c8b0; }
+    body.light-mode .footer-dark h5 { color: #1a3a1a; }
+    body.light-mode .footer-dark a { color: #2a6a2a; }
+    body.light-mode .footer-dark a:hover { color: #1a4a1a; }
+    body.light-mode .footer-copy { color: #4a6a4a; }
+    body.light-mode .footer-divider { border-color: #b0c8b0; }
+
+    .container-fluid {
+      padding: 2rem 1.5rem;
+    }
+
+    /* ---------- breadcrumb / eyebrow ---------- */
+    .breadcrumb-sn {
+      font-size: 0.85rem;
+      color: #a0b8a0;
+      letter-spacing: 0.3px;
+      font-weight: 400;
+    }
+    .breadcrumb-sn a {
+      color: #b3d9b3;
+      text-decoration: none;
+      transition: 0.2s;
+    }
+    .breadcrumb-sn a:hover {
+      color: #d4f0d4;
+      text-decoration: underline;
+    }
+
+    .section-eyebrow {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #8bb88b;
+      font-weight: 600;
+    }
+
+    /* ---------- headings & text ---------- */
+    h1, h2, h3, .fw-semibold {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      color: #f0faf0;
+      letter-spacing: -0.3px;
+    }
+
+    h2 {
+      font-size: 2.2rem;
+      letter-spacing: -0.5px;
+    }
+
+    .text-dim {
+      color: #b8ceb8;
+    }
+
+    /* ---------- value cards ---------- */
+    .value-card {
+      background: #141e14;
+      padding: 1.8rem 1.5rem;
+      border-radius: 24px;
+      border: 1px solid #2a3f2a;
+      transition: 0.25s ease;
+      height: 100%;
+      backdrop-filter: blur(2px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+    }
+    .value-card:hover {
+      background: #1c2a1c;
+      border-color: #4d7a4d;
+      transform: translateY(-4px);
+      box-shadow: 0 12px 28px rgba(0,20,0,0.8);
+    }
+    .value-icon {
+      font-size: 2.2rem;
+      color: #8bc34a;
+      margin-bottom: 0.5rem;
+    }
+    .value-card h3 {
+      color: #e0f0e0;
+      font-weight: 600;
+    }
+
+    /* ---------- team cards ---------- */
+    .team-card {
+      background: #141e14;
+      border-radius: 30px;
+      padding: 1.5rem 0.8rem;
+      text-align: center;
+      border: 1px solid #2a3f2a;
+      transition: 0.2s;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.5);
+    }
+    .team-card:hover {
+      background: #1c2a1c;
+      border-color: #5a8a5a;
+      transform: scale(1.02);
+    }
+    .team-avatar {
+      width: 70px;
+      height: 70px;
+      background: #1e331e;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 0.7rem;
+      font-weight: 700;
+      font-size: 1.6rem;
+      color: #b3e0b3;
+      border: 2px solid #3f6a3f;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    /* ---------- réalisations (cards) : images libres ---------- */
+    .card {
+      background: #121b12;
+      border: 1px solid #2a402a;
+      border-radius: 24px;
+      transition: 0.2s;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.7);
+      color: #d4e6d4;
+      overflow: hidden;
+    }
+    .card:hover {
+      border-color: #6ea06e;
+      transform: translateY(-6px);
+      box-shadow: 0 16px 32px rgba(0,30,0,0.9);
+    }
+    .card-img-top {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      background: #1b2a1b;
+      border-top-left-radius: 24px;
+      border-top-right-radius: 24px;
+      display: block;
+    }
+    .card-body {
+      background: #121b12;
+      border-bottom-left-radius: 24px;
+      border-bottom-right-radius: 24px;
+      padding: 1rem 1.2rem;
+    }
+    .card-text {
+      color: #c6ddc6;
+      font-weight: 400;
+      margin-bottom: 0;
+    }
+
+    /* ----- footer (vert noir butter) ----- */
+    .footer-dark {
+      background: #0a120a;
+      border-top: 1px solid #2c442c;
+      padding: 2.5rem 0 1.5rem;
+      margin-top: 3rem;
+      border-radius: 40px 40px 0 0;
+    }
+    .footer-dark h5 {
+      color: #c6e6c6;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+    .footer-dark a {
+      color: #aacfaa;
+      text-decoration: none;
+      transition: 0.15s;
+      font-size: 0.95rem;
+      font-weight: 400;
+    }
+    .footer-dark a:hover {
+      color: #d9f0d9;
+      text-decoration: underline;
+    }
+    .footer-dark .bi {
+      color: #8bc34a;
+      margin-right: 6px;
+    }
+    .footer-divider {
+      border-color: #2c462c;
+      opacity: 0.4;
+    }
+    .footer-copy {
+      color: #6f8f6f;
+      font-size: 0.9rem;
+      font-weight: 400;
+    }
+
+    @media (max-width: 768px) {
+      h2 { font-size: 1.8rem; }
+      .value-card { padding: 1.2rem; }
+    }
+
+    /* =============================================
+       BOUTON RADIAL SHARE + MODE SOMBRE (toggle)
+    ============================================= */
+    /* --- FAB principal --- */
+    .share-fab {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      z-index: 999;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: #1e331e;
+      border: 2px solid #4d7a4d;
+      color: #8bc34a;
+      font-size: 1.8rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.8);
+      transition: 0.25s ease;
+    }
+    .share-fab:hover {
+      transform: scale(1.08);
+      background: #2a462a;
+      border-color: #6ea06e;
+    }
+    .share-fab.active {
+      background: #2a462a;
+      border-color: #8bc34a;
+      transform: rotate(45deg);
+    }
+    .share-fab .fab-glow {
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #8bc34a33, transparent 70%);
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    /* --- Backdrop --- */
+    .share-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 990;
+      background: rgba(0,0,0,0.45);
+      backdrop-filter: blur(3px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .share-backdrop.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* --- Anneau radial --- */
+    .share-ring {
+      position: fixed;
+      bottom: 100px;
+      right: 30px;
+      z-index: 995;
+      width: 0;
+      height: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+    }
+    .share-ring.active {
+      pointer-events: auto;
+    }
+
+    .share-item {
+      position: absolute;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #1e331e;
+      border: 1.5px solid #4d7a4d;
+      color: #b3e0b3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      text-decoration: none;
+      transition: 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.7);
+      transform: translate(0, 0) scale(0);
+      opacity: 0;
+      left: 50%;
+      top: 50%;
+      margin-left: -24px;
+      margin-top: -24px;
+    }
+    .share-ring.active .share-item {
+      transform: translate(var(--tx), var(--ty)) scale(1);
+      opacity: 1;
+    }
+    .share-item:hover {
+      transform: translate(var(--tx), var(--ty)) scale(1.15) !important;
+      background: #2a462a;
+      border-color: #8bc34a;
+      color: #d4f0d4;
+    }
+    /* couleurs spécifiques */
+    .share-item.share-copy:hover { background: #3a5a3a; }
+    .share-item.share-wa:hover { background: #25D366; border-color: #25D366; color: #fff; }
+    .share-item.share-fb:hover { background: #1877F2; border-color: #1877F2; color: #fff; }
+    .share-item.share-tw:hover { background: #000; border-color: #fff; color: #fff; }
+    .share-item.share-li:hover { background: #0A66C2; border-color: #0A66C2; color: #fff; }
+    .share-item.share-mail:hover { background: #D44638; border-color: #D44638; color: #fff; }
+
+    /* --- Toast de confirmation --- */
+    .share-toast {
+      position: fixed;
+      bottom: 110px;
+      right: 100px;
+      background: #1e331e;
+      border: 1px solid #4d7a4d;
+      color: #d4f0d4;
+      padding: 10px 22px;
+      border-radius: 40px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.7);
+      opacity: 0;
+      transform: translateY(16px) scale(0.9);
+      transition: 0.25s ease;
+      pointer-events: none;
+      z-index: 1000;
+      backdrop-filter: blur(4px);
+    }
+    .share-toast.show {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    /* ----- TOGGLE MODE SOMBRE (bouton dans le footer) ----- */
+    .dark-toggle-btn {
+      background: #1e331e;
+      border: 1.5px solid #4d7a4d;
+      color: #b3e0b3;
+      border-radius: 40px;
+      padding: 6px 18px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: 0.2s;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .dark-toggle-btn:hover {
+      background: #2a462a;
+      border-color: #6ea06e;
+      color: #d4f0d4;
+    }
+    body.light-mode .dark-toggle-btn {
+      background: #d0e0d0;
+      border-color: #6a9a6a;
+      color: #1a3a1a;
+    }
+    body.light-mode .dark-toggle-btn:hover {
+      background: #b8d0b8;
+    }
+  </style>
+</head>
+<body class="dark-mode">
+<div class="container-fluid">
+  <div class="row">
+
+    <!-- ========== SECTION À PROPOS ========== -->
+    <section id="apropos" class="col-12">
+      <div class="container">
+        <div class="breadcrumb-sn mb-2"><a href="#accueil">Accueil</a> / À propos</div>
+        <div class="section-eyebrow mb-2">Qui sommes-nous</div>
+        <h2 class="mb-4 fw-semibold">La sécurité réseau, sans jargon.</h2>
+        <p class="text-dim mb-5" style="max-width:600px;">SecureNet est un service du Réseau Multiservices, dédié à la protection des infrastructures réseau des particuliers et entreprises à Douala et Yaoundé.</p>
+
+        <div class="row g-4 mb-5">
+          <div class="col-md-4">
+            <div class="value-card">
+              <div class="value-icon"><i class="bi bi-eye"></i></div>
+              <h3 class="fs-5 fw-semibold mb-2">Transparence</h3>
+              <p class="text-dim small mb-0">Chaque audit se termine par un rapport clair, sans jargon technique inutile.</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="value-card">
+              <div class="value-icon"><i class="bi bi-lightning-charge"></i></div>
+              <h3 class="fs-5 fw-semibold mb-2">Réactivité</h3>
+              <p class="text-dim small mb-0">Réponse sous 24h, intervention rapide sur Douala et Yaoundé.</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="value-card">
+              <div class="value-icon"><i class="bi bi-shield-check"></i></div>
+              <h3 class="fs-5 fw-semibold mb-2">Fiabilité</h3>
+              <p class="text-dim small mb-0">Des solutions durables, pas des correctifs temporaires.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-eyebrow mb-2">L'équipe</div>
+        <h3 class="mb-4 fw-semibold">Des techniciens certifiés</h3>
+        <div class="row g-4 mb-5">
+          <div class="col-6 col-md-3">
+            <div class="team-card">
+              <div class="team-avatar">JM</div>
+              <div class="text-white fw-semibold">Jean Mballa</div>
+              <div class="text-dim small">Réseau &amp; câblage</div>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <div class="team-card">
+              <div class="team-avatar">FN</div>
+              <div class="text-white fw-semibold">Flore Ngo</div>
+              <div class="text-dim small">Sécurité informatique</div>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <div class="team-card">
+              <div class="team-avatar">SB</div>
+              <div class="text-white fw-semibold">Serge Biya</div>
+              <div class="text-dim small">Vidéosurveillance</div>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <div class="team-card">
+              <div class="team-avatar">AK</div>
+              <div class="text-white fw-semibold">Aminatou Kaka</div>
+              <div class="text-dim small">Audit &amp; diagnostic</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== SECTION NOS RÉALISATIONS ========== -->
+    <section class="col-12 mt-4">
+      <div class="container">
+        <div class="section-eyebrow mb-1">Portfolio</div>
+        <h1 class="mb-4 fw-semibold" style="font-size:2.4rem;">Nos Réalisations</h1>
+        <div class="row g-4">
+          <!-- Carte 1 -->
+          <div class="col-md-3 col-sm-6">
+            <div class="card">
+              <img src="image projet/faf1a8915327e150ef56b973dbe06d31 (1).jpg" class="card-img-top" alt="Audit réseau">
+              <div class="card-body">
+                <p class="card-text">Audit réseau complet pour une banque à Douala.</p>
+              </div>
+            </div>
+          </div>
+          <!-- Carte 2 -->
+          <div class="col-md-3 col-sm-6">
+            <div class="card">
+              <img src="image projet/installation réseau.jpg" class="card-img-top" alt="Fibre optique">
+              <div class="card-body">
+                <p class="card-text">Installation fibre & sécurisation périmètre Yaoundé.</p>
+              </div>
+            </div>
+          </div>
+          <!-- Carte 3 -->
+          <div class="col-md-3 col-sm-6">
+            <div class="card">
+              <img src="image projet/serre.jpg" class="card-img-top" alt="Détection intrusion">
+              <div class="card-body">
+                <p class="card-text">Système de détection d'intrusion (IDS) pour hôpital.</p>
+              </div>
+            </div>
+          </div>
+          <!-- Carte 4 -->
+          <div class="col-md-3 col-sm-6">
+            <div class="card">
+              <img src="image projet/videosurveillanceentreprise.jpg" class="card-img-top" alt="Vidéosurveillance">
+              <div class="card-body">
+                <p class="card-text">Vidéosurveillance IP & contrôle d'accès, 24 caméras.</p>
+              </div>
+            </div>
+          </div>
+          <!-- Carte 5 -->
+          <div class="col-md-3 col-sm-6">
+            <div class="card">
+              <img src="image projet/szcur.jpg" class="card-img-top" alt="Cloud">
+              <div class="card-body">
+                <p class="card-text">Migration cloud sécurisée pour cabinet d'avocats.</p>
+              </div>
+            </div>
+          </div>
+          <!-- Carte 6 -->
+          <div class="col-md-3 col-sm-6">
+            <div class="card">
+              <img src="https://placehold.co/400x300/1a2a1a/8bc34a?text=VPN+2FA" class="card-img-top" alt="VPN">
+              <div class="card-body">
+                <p class="card-text">Déploiement VPN & authentification 2FA pour 50 utilisateurs.</p>
+              </div>
+            </div>
+          </div>
+          <!-- Carte 7 -->
+          <div class="col-md-3 col-sm-6">
+            <div class="card">
+              <img src="https://placehold.co/400x300/1a2a1a/8bc34a?text=Supervision" class="card-img-top" alt="Supervision">
+              <div class="card-body">
+                <p class="card-text">Tableau de bord de supervision réseau temps réel.</p>
+              </div>
+            </div>
+          </div>
+          <!-- Carte 8 -->
+          <div class="col-md-3 col-sm-6">
+            <div class="card">
+              <img src="image projet/parefeu (6).jpg" class="card-img-top" alt="Câblage">
+              <div class="card-body">
+                <p class="card-text">Câblage structuré cat.6 et armoire de brassage.</p>
+              </div>
+            </div>
+          </div>
+          <!-- Carte 9 -->
+          <div class="col-md-3 col-sm-6">
+            <div class="card">
+              <img src="image projet/parefeu (1).jpg" class="card-img-top" alt="Pare-feu">
+              <div class="card-body">
+                <p class="card-text">Pare-feu nouvelle génération et filtrage applicatif.</p>
+              </div>
+            </div>
+          </div>
+          <!-- Carte 10 -->
+          <div class="col-md-3 col-sm-6">
+            <div class="card">
+              <img src="https://placehold.co/400x300/1a2a1a/8bc34a?text=MDM+mobile" class="card-img-top" alt="MDM">
+              <div class="card-body">
+                <p class="card-text">Sécurisation des terminaux mobiles (MDM) pour PME.</p>
+              </div>
+            </div>
+          </div>
+          <!-- Carte 11 -->
+          <div class="col-md-3 col-sm-6">
+            <div class="card">
+              <img src="image projet/parefeu (5).jpg" class="card-img-top" alt="DMZ">
+              <div class="card-body">
+                <p class="card-text">Segment réseau DMZ et isolation des serveurs.</p>
+              </div>
+            </div>
+          </div>
+          <!-- Carte 12 -->
+          <div class="col-md-3 col-sm-6">
+            <div class="card">
+              <img src="https://placehold.co/400x300/1a2a1a/8bc34a?text=RGPD+audit" class="card-img-top" alt="RGPD">
+              <div class="card-body">
+                <p class="card-text">Audit de conformité RGPD et recommandations.</p>
+              </div>
+            </div>
+          </div>
+        </div> <!-- /row -->
+      </div> <!-- /container -->
+    </section>
+
+  </div> <!-- /row -->
+</div> <!-- /container-fluid -->
+
+<!-- ========== FOOTER VERT NOIR BUTTER ========== -->
+<footer class="footer-dark">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-md-4">
+        <h5><i class="bi bi-shield-fill-check"></i> SecureNet</h5>
+        <p class="text-dim small" style="max-width:260px;">Protection réseau sans jargon · Douala & Yaoundé</p>
+        <div class="d-flex gap-3 mt-2">
+          <a href="#"><i class="bi bi-facebook"></i></a>
+          <a href="#"><i class="bi bi-linkedin"></i></a>
+          <a href="#"><i class="bi bi-twitter-x"></i></a>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <h5>Liens</h5>
+        <div class="d-flex flex-column">
+          <a href="#">Accueil</a>
+          <a href="#">À propos</a>
+          <a href="#">Services</a>
+          <a href="#">Réalisations</a>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <h5>Contact</h5>
+        <div class="text-dim small">
+          <div><i class="bi bi-geo-alt"></i> Douala, Cameroun</div>
+          <div><i class="bi bi-telephone"></i> +237 6 50 12 34 56</div>
+          <div><i class="bi bi-envelope"></i> contact@securenet.cm</div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <h5>Horaires</h5>
+        <div class="text-dim small">
+          <div>Lun–Ven : 8h – 18h</div>
+          <div>Sam : 9h – 13h</div>
+          <div class="mt-1"><span class="badge bg-success bg-opacity-25 text-success">Intervention 24/7</span></div>
+        </div>
+      </div>
+    </div>
+    <hr class="footer-divider mt-4">
+    <div class="d-flex justify-content-between align-items-center flex-wrap">
+      <span class="footer-copy">© 2026 SecureNet – Réseau Multiservices</span>
+      <div class="d-flex align-items-center gap-3">
+        <span class="footer-copy"><i class="bi bi-droplet"></i> Vert noir butter</span>
+        <!-- TOGGLE MODE SOMBRE / CLAIR -->
+        <button class="dark-toggle-btn" id="darkToggleBtn">
+          <i class="bi bi-moon-fill" id="darkIcon"></i> <span id="darkLabel">Sombre</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ========== RADIAL SHARE + BACKDROP ========== -->
+<div class="share-backdrop" id="shareBackdrop"></div>
+<button class="share-fab" id="shareFab" aria-label="Partager">
+  <span class="fab-glow"></span>
+  <i class="bi bi-share-fill"></i>
+</button>
+<div class="share-ring" id="shareRing">
+  <a href="#" class="share-item share-copy" title="Copier le lien"><i class="bi bi-link-45deg"></i></a>
+  <a href="https://wa.me/?text=Découvrez%20SecureNet" target="_blank" class="share-item share-wa" title="WhatsApp"><i class="bi bi-whatsapp"></i></a>
+  <a href="https://www.facebook.com/sharer/sharer.php?u=" target="_blank" class="share-item share-fb" title="Facebook"><i class="bi bi-facebook"></i></a>
+  <a href="https://twitter.com/intent/tweet?text=Découvrez%20SecureNet" target="_blank" class="share-item share-tw" title="Twitter / X"><i class="bi bi-twitter-x"></i></a>
+  <a href="https://www.linkedin.com/sharing/share-offsite/?url=" target="_blank" class="share-item share-li" title="LinkedIn"><i class="bi bi-linkedin"></i></a>
+  <a href="mailto:?subject=SecureNet&body=Découvrez%20SecureNet" class="share-item share-mail" title="Email"><i class="bi bi-envelope-fill"></i></a>
+</div>
+<div class="share-toast" id="shareToast">Lien copié !</div>
+
+<!-- ========== SCRIPTS ========== -->
+<script>
+  (function() {
+    // ---- RADIAL SHARE ----
+    const fab = document.getElementById('shareFab');
+    const ring = document.getElementById('shareRing');
+    const backdrop = document.getElementById('shareBackdrop');
+    const toast = document.getElementById('shareToast');
+    const items = ring.querySelectorAll('.share-item');
+    const radius = 100;
+    const startAngle = 175;
+    const endAngle = 270;
+    const count = items.length;
+
+    items.forEach((item, i) => {
+      const angleDeg = count === 1 ? startAngle : startAngle + (i * (endAngle - startAngle)) / (count - 1);
+      const angleRad = (angleDeg * Math.PI) / 180;
+      const tx = radius * Math.cos(angleRad);
+      const ty = radius * Math.sin(angleRad);
+      item.style.setProperty('--tx', `${tx}px`);
+      item.style.setProperty('--ty', `${ty}px`);
+    });
+
+    function closeShareMenu() {
+      fab.classList.remove('active');
+      ring.classList.remove('active');
+      backdrop.classList.remove('active');
+    }
+
+    fab.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isActive = fab.classList.toggle('active');
+      ring.classList.toggle('active', isActive);
+      backdrop.classList.toggle('active', isActive);
+    });
+
+    backdrop.addEventListener('click', closeShareMenu);
+
+    const copyLinkBtn = ring.querySelector('.share-copy');
+    copyLinkBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const url = window.location.href;
+      if (navigator.clipboard) navigator.clipboard.writeText(url).catch(() => {});
+      toast.textContent = 'Lien copié !';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2200);
+      closeShareMenu();
+    });
+
+    items.forEach(item => {
+      if (!item.classList.contains('share-copy')) {
+        item.addEventListener('click', () => setTimeout(closeShareMenu, 200));
+      }
+    });
+
+    // ---- MODE SOMBRE / CLAIR (toggle) ----
+    const body = document.body;
+    const toggleBtn = document.getElementById('darkToggleBtn');
+    const darkIcon = document.getElementById('darkIcon');
+    const darkLabel = document.getElementById('darkLabel');
+
+    // État par défaut : dark-mode (classe présente)
+    function updateToggleUI() {
+      if (body.classList.contains('dark-mode')) {
+        darkIcon.className = 'bi bi-moon-fill';
+        darkLabel.textContent = 'Sombre';
+      } else {
+        darkIcon.className = 'bi bi-sun-fill';
+        darkLabel.textContent = 'Clair';
+      }
+    }
+    updateToggleUI();
+
+    toggleBtn.addEventListener('click', () => {
+      // basculer entre dark-mode et light-mode
+      if (body.classList.contains('dark-mode')) {
+        body.classList.remove('dark-mode');
+        body.classList.add('light-mode');
+      } else {
+        body.classList.remove('light-mode');
+        body.classList.add('dark-mode');
+      }
+      updateToggleUI();
+    });
+
+    // (optionnel) forcer le mode sombre au chargement si pas de classe
+    if (!body.classList.contains('dark-mode') && !body.classList.contains('light-mode')) {
+      body.classList.add('dark-mode');
+      updateToggleUI();
+    }
+  })();
+</script>
+<!-- Bootstrap JS (optionnel) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
+</body>
+</html>

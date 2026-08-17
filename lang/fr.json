@@ -1,0 +1,18 @@
+{
+    "subtitle": "Installation réseau, sécurité IT et bien plus encore.",
+    "how_it_works": "Alors, comment ça marche ?",
+    "simple": "C'est simple !",
+    "step1_title": "Le client",
+    "step1_desc": "remplit le formulaire avant de passer une demande",
+    "step2_title": "La demande",
+    "step2_desc": "est enregistrée dans une base en ligne (Supabase)",
+    "step3_title": "Le technicien ou l'administrateur",
+    "step3_desc": "consulte le dashboard protégé par un mot de passe",
+    "you_are": "Vous êtes",
+    "client": "Client",
+    "ask_audit": "Demander un audit",
+    "tech": "Technicien/Administrateur",
+    "access_dashboard": "Accéder au dashboard",
+    "footer_left": "SecureNet · protection IT",
+    "footer_right": "Sécurité réseau & vidéosurveillance"
+}

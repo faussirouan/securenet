@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Votre CSS -->
+    <link rel="stylesheet" href="sidebar.css">
+
+    <title>SecureNet · Administration</title>
+</head>
+<body>
+
+<!-- ===== SIDEBAR ===== -->
+<div class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+        <i class="bi bi-shield-lock-fill"></i>
+        <span>Secure<span>Net</span></span>
+    </div>
+
+    <nav class="sidebar-nav">
+        <ul>
+            <li class="active">
+                <a href="#" data-section="dashboard">
+                    <i class="bi bi-grid-1x2-fill"></i>
+                    <span>Tableau de bord</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" data-section="specialistes">
+                    <i class="bi bi-people-fill"></i>
+                    <span>Spécialistes</span>
+                    <span class="badge" id="badgeSpecialistes">-</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" data-section="demandes">
+                    <i class="bi bi-file-earmark-text-fill"></i>
+                    <span>Demandes</span>
+                    <span class="badge badge-warning" id="badgeDemandes">-</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" data-section="clients">
+                    <i class="bi bi-person-fill"></i>
+                    <span>Clients</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" data-section="statistiques" id="navStatistiques">
+                    <i class="bi bi-bar-chart-fill"></i>
+                    <span>Statistiques</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" data-section="parametres">
+                    <i class="bi bi-gear-fill"></i>
+                    <span>Paramètres</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="sidebar-footer">
+        <a href="accueil.html">
+            <i class="bi bi-box-arrow-right"></i>
+            <span>Déconnexion</span>
+        </a>
+    </div>
+</div>
+
+<!-- ===== CONTENU PRINCIPAL ===== -->
+<div class="main-content">
+
+    <header class="main-header">
+        <div class="header-left">
+            <button id="toggleSidebar" class="btn-toggle">
+                <i class="bi bi-list"></i>
+            </button>
+            <h2 id="pageTitle">Tableau de bord</h2>
+        </div>
+        <div class="header-right">
+            <button id="theme-toggle" aria-label="Basculer le mode sombre">🌙</button>
+            <select id="language-selector">
+                <option value="fr">🇫🇷 FR</option>
+                <option value="en">🇬🇧 EN</option>
+            </select>
+            <div class="profile">
+                <i class="bi bi-person-circle"></i>
+                <span>Admin</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="content">
+
+        <!-- SECTION : DASHBOARD -->
+        <section id="section-dashboard" class="section-content active">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon green"><i class="bi bi-people-fill"></i></div>
+                    <div class="stat-info">
+                        <h3 id="dashSpecialistes">-</h3>
+                        <p>Spécialistes</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon blue"><i class="bi bi-file-earmark-text-fill"></i></div>
+                    <div class="stat-info">
+                        <h3 id="dashDemandesTotal">-</h3>
+                        <p>Demandes totales</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon yellow"><i class="bi bi-clock-fill"></i></div>
+                    <div class="stat-info">
+                        <h3 id="dashEnAttente">-</h3>
+                        <p>En attente</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon red"><i class="bi bi-check-circle-fill"></i></div>
+                    <div class="stat-info">
+                        <h3 id="dashTerminees">-</h3>
+                        <p>Terminées</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h5><i class="bi bi-clock-history me-2"></i>Activité récente</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="activity-list" id="activiteRecente">
+                        <li><span class="activity-text text-muted">Chargement...</span></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION : SPÉCIALISTES -->
+        <section id="section-specialistes" class="section-content">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h4><i class="bi bi-people-fill me-2"></i>Gestion des spécialistes</h4>
+                <button class="btn btn-primary" id="btnAddSpecialiste" data-bs-toggle="modal" data-bs-target="#specialisteModal">
+                    <i class="bi bi-plus-circle"></i> Ajouter
+                </button>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nom</th>
+                            <th>Spécialité</th>
+                            <th>Email</th>
+                            <th>Téléphone</th>
+                        </tr>
+                    </thead>
+                    <tbody id="specialistesTableBody">
+                        <tr><td colspan="5">Chargement...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- SECTION : DEMANDES -->
+        <section id="section-demandes" class="section-content">
+            <h4><i class="bi bi-file-earmark-text-fill me-2"></i>Demandes en cours</h4>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Client</th>
+                            <th>Téléphone</th>
+                            <th>Ville / Type</th>
+                            <th>Message</th>
+                            <th>Statut</th>
+                            <th>Technicien</th>
+                            <th>Spécialité</th>
+                            <th>Date</th>
+                            <th>Rapport</th>
+                        </tr>
+                    </thead>
+                    <tbody id="demandesTableBody">
+                        <tr><td colspan="9">Chargement des demandes...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- SECTION : CLIENTS -->
+        <section id="section-clients" class="section-content">
+            <h4><i class="bi bi-person-fill me-2"></i>Clients</h4>
+            <div class="row g-4" id="clientsContainer">
+                <p class="text-muted">Chargement...</p>
+            </div>
+        </section>
+
+        <!-- SECTION : STATISTIQUES -->
+        <section id="section-statistiques" class="section-content">
+            <h4><i class="bi bi-bar-chart-fill me-2"></i>Statistiques</h4>
+
+            <div class="stats-grid mb-4">
+                <div class="stat-card">
+                    <div class="stat-icon green"><i class="bi bi-people-fill"></i></div>
+                    <div class="stat-info">
+                        <h3 id="stats-specialistes">0</h3>
+                        <p>Spécialistes</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon blue"><i class="bi bi-file-earmark-text-fill"></i></div>
+                    <div class="stat-info">
+                        <h3 id="stats-demandes-total">0</h3>
+                        <p>Demandes totales</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon yellow"><i class="bi bi-clock-fill"></i></div>
+                    <div class="stat-info">
+                        <h3 id="stats-demandes-nouvelles">0</h3>
+                        <p>Nouvelles</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon orange"><i class="bi bi-person-check-fill"></i></div>
+                    <div class="stat-info">
+                        <h3 id="stats-demandes-assignees">0</h3>
+                        <p>Assignées</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon red"><i class="bi bi-check-circle-fill"></i></div>
+                    <div class="stat-info">
+                        <h3 id="stats-demandes-traitees">0</h3>
+                        <p>Traitées</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon purple"><i class="bi bi-building"></i></div>
+                    <div class="stat-info">
+                        <h3 id="stats-clients-uniques">0</h3>
+                        <p>Clients uniques</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header"><h5><i class="bi bi-pie-chart-fill me-2"></i>Répartition des demandes</h5></div>
+                        <div class="card-body"><canvas id="chartStatuts" height="200"></canvas></div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header"><h5><i class="bi bi-graph-up-arrow me-2"></i>Évolution des demandes (courbe)</h5></div>
+                        <div class="card-body"><canvas id="chartEvolution" height="200"></canvas></div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header"><h5><i class="bi bi-bar-chart-fill me-2"></i>Demandes par spécialité</h5></div>
+                        <div class="card-body"><canvas id="chartSpecialites" height="150"></canvas></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION : PARAMÈTRES -->
+        <section id="section-parametres" class="section-content">
+            <h4><i class="bi bi-gear-fill me-2"></i>Paramètres</h4>
+            <div class="card">
+                <div class="card-body">
+                    <form>
+                        <div class="mb-3">
+                            <label class="form-label">Nom du site</label>
+                            <input type="text" class="form-control" value="SecureNet">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Email de contact</label>
+                            <input type="email" class="form-control" value="admin@securenet.com">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Thème par défaut</label>
+                            <select class="form-select">
+                                <option value="auto">Automatique</option>
+                                <option value="light">Clair</option>
+                                <option value="dark">Sombre</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Enregistrer</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</div>
+
+<!-- ===== MODAL AJOUTER SPÉCIALISTE ===== -->
+<div class="modal fade" id="specialisteModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="bi bi-person-plus me-2"></i>Ajouter un spécialiste</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="specialisteForm">
+                    <div class="mb-3">
+                        <label class="form-label">Nom complet</label>
+                        <input type="text" class="form-control" id="specNom" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Spécialité</label>
+                        <select class="form-select" id="specSpecialite">
+                            <option value="Réseau">Réseau</option>
+                            <option value="Sécurité">Sécurité</option>
+                            <option value="Vidéosurveillance">Vidéosurveillance</option>
+                            <option value="Audit">Audit</option>
+                            <option value="Cloud">Cloud</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" id="specEmail" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Téléphone</label>
+                        <input type="tel" class="form-control" id="specTel">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Mot de passe</label>
+                        <input type="password" class="form-control" id="specPassword" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                <button type="button" class="btn btn-primary" id="btnSaveSpecialiste">Enregistrer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ===== JAVASCRIPT ===== -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+<script>
+  const SUPABASE_URL = "https://tuxviwabtpnkgacklgeo.supabase.co";
+  const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR1eHZpd2FidHBua2dhY2tsZ2VvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY3Njg4ODUsImV4cCI6MjEwMjM0NDg4NX0.WBZfo-LiTC_nu66BCN3E5KvkoKRz8mk5Lz3X1ibhP0w";
+  const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  console.log("Supabase connecté :", supabaseClient);
+</script>
+
+<script>
+    // ============================================
+    // PROTECTION DE LA PAGE
+    // ============================================
+    async function verifierAcces() {
+        const { data: { session } } = await supabaseClient.auth.getSession();
+        if (!session) {
+            window.location.href = 'connexionadmin.html';
+            return false;
+        }
+        const { data: adminRow } = await supabaseClient
+            .from('administrateur').select('id').eq('id', session.user.id).maybeSingle();
+        if (!adminRow) {
+            alert("Accès refusé : ce compte n'est pas administrateur.");
+            window.location.href = 'connexionadmin.html';
+            return false;
+        }
+        return true;
+    }
+
+    // ============================================
+    // TECHNICIENS
+    // ============================================
+    let listeTechniciens = [];
+
+    async function chargerTechniciens() {
+        const { data, error } = await supabaseClient
+            .from('technicien')
+            .select('id, nom, email, telephone, specialite');
+        if (error) { console.error('Erreur techniciens :', error); return; }
+        listeTechniciens = data || [];
+    }
+
+    function afficherSpecialistes() {
+        const tbody = document.getElementById('specialistesTableBody');
+        if (!tbody) return;
+        if (listeTechniciens.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="5">Aucun spécialiste pour le moment.</td></tr>`;
+            return;
+        }
+        tbody.innerHTML = listeTechniciens.map((t, i) => `
+            <tr>
+                <td>${i + 1}</td>
+                <td>${t.nom}</td>
+                <td>${t.specialite || '-'}</td>
+                <td>${t.email || '-'}</td>
+                <td>${t.telephone || '-'}</td>
+            </tr>
+        `).join('');
+        document.getElementById('badgeSpecialistes').textContent = listeTechniciens.length;
+    }
+
+    // ============================================
+    // DEMANDES
+    // ============================================
+    let toutesLesDemandes = [];
+
+    async function chargerDemandes() {
+        const tbody = document.getElementById('demandesTableBody');
+        if (!tbody) return;
+
+        const { data, error } = await supabaseClient
+            .from('demande_audit')
+            .select('id, telephone, entreprise, type_local, ville, message, statut, technicien_id, client_id, date_creation, client(nom), reponse(message_reponse)')
+            .order('date_creation', { ascending: false });
+
+        if (error) {
+            tbody.innerHTML = `<tr><td colspan="9">Erreur : ${error.message}</td></tr>`;
+            console.error(error);
+            return;
+        }
+
+        toutesLesDemandes = data || [];
+        document.getElementById('badgeDemandes').textContent = toutesLesDemandes.length;
+
+        if (toutesLesDemandes.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="9">Aucune demande pour le moment.</td></tr>`;
+            return;
+        }
+
+        tbody.innerHTML = toutesLesDemandes.map(demande => {
+            const nomClient = demande.client?.nom || demande.entreprise || 'Client';
+            const dateFormatee = new Date(demande.date_creation).toLocaleDateString('fr-FR');
+
+            const optionsTechniciens = listeTechniciens.map(t =>
+                `<option value="${t.id}" ${demande.technicien_id === t.id ? 'selected' : ''}>${t.nom}</option>`
+            ).join('');
+
+            const technicienAssigne = listeTechniciens.find(t => t.id === demande.technicien_id);
+            const specialiteAffichee = technicienAssigne?.specialite || '-';
+
+            const badgeStatut = {
+                nouveau: '<span class="status-badge danger">Nouveau</span>',
+                assigne: '<span class="status-badge warning">Assigné</span>',
+                traite: '<span class="status-badge success">Traité</span>'
+            }[demande.statut] || demande.statut;
+
+            return `
+                <tr>
+                    <td>${nomClient}</td>
+                    <td>${demande.telephone || '-'}</td>
+                    <td>${demande.ville || '-'} / ${demande.type_local || '-'}</td>
+                    <td style="max-width:200px; white-space:normal;">${demande.message || '-'}</td>
+                    <td>${badgeStatut}</td>
+                    <td>
+                        <select class="form-select form-select-sm select-technicien" data-demande-id="${demande.id}">
+                            <option value="">-- Choisir --</option>
+                            ${optionsTechniciens}
+                        </select>
+                    </td>
+                    <td>${specialiteAffichee}</td>
+                    <td>${dateFormatee}</td>
+                    <td>
+                        ${demande.statut === 'traite' ? `
+                            <button class="btn btn-outline-primary btn-sm btn-pdf-admin"
+                                data-nom-client="${nomClient}"
+                                data-telephone="${demande.telephone || ''}"
+                                data-ville="${demande.ville || ''}"
+                                data-type-local="${demande.type_local || ''}"
+                                data-date="${dateFormatee}"
+                                data-message="${(demande.message || '').replace(/"/g, '&quot;')}"
+                                data-technicien="${technicienAssigne?.nom || ''}"
+                                data-reponse="${(demande.reponse?.[0]?.message_reponse || '').replace(/"/g, '&quot;')}">
+                                <i class="bi bi-file-earmark-pdf"></i> PDF
+                            </button>
+                        ` : '-'}
+                    </td>
+                </tr>
+            `;
+        }).join('');
+
+        document.querySelectorAll('.select-technicien').forEach(select => {
+            select.addEventListener('change', async (e) => {
+                const demandeId = e.target.getAttribute('data-demande-id');
+                const technicienId = e.target.value;
+                if (!technicienId) return;
+
+                const fenetreWhatsApp = window.open('', '_blank');
+
+                const { error } = await supabaseClient
+                    .from('demande_audit')
+                    .update({ technicien_id: technicienId, statut: 'assigne' })
+                    .eq('id', demandeId);
+
+                if (error) {
+                    if (fenetreWhatsApp) fenetreWhatsApp.close();
+                    alert('❌ Erreur lors de l\'assignation : ' + error.message);
+                } else {
+                    const technicien = listeTechniciens.find(t => t.id === technicienId);
+                    if (technicien && technicien.telephone) {
+                        const message = `Bonjour ${technicien.nom}, une nouvelle demande d'audit vous a été assignée sur SecureNet. Connectez-vous à votre espace pour la consulter.`;
+                        const numeroPropre = technicien.telephone.replace(/[^0-9]/g, '');
+                        const lienWhatsApp = `https://wa.me/${numeroPropre}?text=${encodeURIComponent(message)}`;
+                        if (fenetreWhatsApp) {
+                            fenetreWhatsApp.location.href = lienWhatsApp;
+                        } else {
+                            alert('⚠️ Le popup a été bloqué. Autorise les popups pour ce site.');
+                        }
+                    } else {
+                        if (fenetreWhatsApp) fenetreWhatsApp.close();
+                        alert('⚠️ Ce technicien n\'a pas de numéro de téléphone enregistré.');
+                    }
+
+                    await chargerDemandes();
+                    await chargerStatistiquesCompletes();
+                }
+            });
+        });
+
+        document.querySelectorAll('.btn-pdf-admin').forEach(btn => {
+            btn.addEventListener('click', () => {
+                genererPdfRapportAdmin({
+                    nomClient: btn.getAttribute('data-nom-client'),
+                    telephone: btn.getAttribute('data-telephone'),
+                    ville: btn.getAttribute('data-ville'),
+                    typeLocal: btn.getAttribute('data-type-local'),
+                    date: btn.getAttribute('data-date'),
+                    message: btn.getAttribute('data-message'),
+                    nomTechnicien: btn.getAttribute('data-technicien'),
+                    reponse: btn.getAttribute('data-reponse')
+                });
+            });
+        });
+    }
+
+    // ============================================
+    // CLIENTS
+    // ============================================
+    async function chargerClients() {
+        const container = document.getElementById('clientsContainer');
+        if (!container) return;
+
+        const { data, error } = await supabaseClient.from('client').select('id, nom');
+
+        if (error) {
+            container.innerHTML = `<p class="text-danger">Erreur : ${error.message}</p>`;
+            return;
+        }
+
+        if (!data || data.length === 0) {
+            container.innerHTML = `<p class="text-muted">Aucun client pour le moment.</p>`;
+            return;
+        }
+
+        container.innerHTML = data.map(c => {
+            const initiales = (c.nom || '?').split(' ').map(w => w[0]).slice(0, 2).join('').toUpperCase();
+            return `
+                <div class="col-md-4">
+                    <div class="client-card">
+                        <div class="client-avatar">${initiales}</div>
+                        <h5>${c.nom}</h5>
+                        <span class="status-badge success">Actif</span>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    // ============================================
+    // STATISTIQUES (cartes dashboard + section complète)
+    // ============================================
+    let chartsCreees = false;
+
+    async function chargerStatistiquesCompletes() {
+        const nbSpecialistes = listeTechniciens.length;
+        const nbDemandesTotal = toutesLesDemandes.length;
+        const nbNouvelles = toutesLesDemandes.filter(d => d.statut === 'nouveau').length;
+        const nbAssignees = toutesLesDemandes.filter(d => d.statut === 'assigne').length;
+        const nbTraitees = toutesLesDemandes.filter(d => d.statut === 'traite').length;
+        const clientsUniques = new Set(toutesLesDemandes.map(d => d.client_id)).size;
+
+        // Cartes du Tableau de bord
+        document.getElementById('dashSpecialistes').textContent = nbSpecialistes;
+        document.getElementById('dashDemandesTotal').textContent = nbDemandesTotal;
+        document.getElementById('dashEnAttente').textContent = nbNouvelles + nbAssignees;
+        document.getElementById('dashTerminees').textContent = nbTraitees;
+
+        // Cartes de la section Statistiques
+        document.getElementById('stats-specialistes').textContent = nbSpecialistes;
+        document.getElementById('stats-demandes-total').textContent = nbDemandesTotal;
+        document.getElementById('stats-demandes-nouvelles').textContent = nbNouvelles;
+        document.getElementById('stats-demandes-assignees').textContent = nbAssignees;
+        document.getElementById('stats-demandes-traitees').textContent = nbTraitees;
+        document.getElementById('stats-clients-uniques').textContent = clientsUniques;
+
+        // Activité récente (5 dernières demandes)
+        const activiteEl = document.getElementById('activiteRecente');
+        if (activiteEl) {
+            const recentes = [...toutesLesDemandes].slice(0, 5);
+            activiteEl.innerHTML = recentes.length === 0
+                ? '<li><span class="activity-text text-muted">Aucune activité récente.</span></li>'
+                : recentes.map(d => {
+                    const couleur = d.statut === 'traite' ? 'green' : d.statut === 'assigne' ? 'yellow' : 'red';
+                    const nom = d.client?.nom || d.entreprise || 'Client';
+                    return `
+                        <li>
+                            <span class="activity-dot ${couleur}"></span>
+                            <span class="activity-text">Demande de <strong>${nom}</strong> — ${d.statut}</span>
+                            <span class="activity-time">${new Date(d.date_creation).toLocaleDateString('fr-FR')}</span>
+                        </li>
+                    `;
+                }).join('');
+        }
+
+        genererGraphiques(nbNouvelles, nbAssignees, nbTraitees);
+    }
+
+    function genererGraphiques(nbNouvelles, nbAssignees, nbTraitees) {
+        if (chartsCreees) return; // évite de recréer les graphiques à chaque rechargement
+        chartsCreees = true;
+
+        // Graphique 1 : répartition (camembert)
+        new Chart(document.getElementById('chartStatuts'), {
+            type: 'pie',
+            data: {
+                labels: ['Nouveau', 'Assigné', 'Traité'],
+                datasets: [{
+                    data: [nbNouvelles, nbAssignees, nbTraitees],
+                    backgroundColor: ['#dc3545', '#ffc107', '#013e37']
+                }]
+            }
+        });
+
+        // Graphique 2 : évolution en courbe (par jour)
+        const parJour = {};
+        toutesLesDemandes.forEach(d => {
+            const jour = new Date(d.date_creation).toLocaleDateString('fr-FR');
+            parJour[jour] = (parJour[jour] || 0) + 1;
+        });
+        new Chart(document.getElementById('chartEvolution'), {
+            type: 'line',
+            data: {
+                labels: Object.keys(parJour),
+                datasets: [{
+                    label: 'Demandes reçues',
+                    data: Object.values(parJour),
+                    borderColor: '#013e37',
+                    backgroundColor: 'rgba(1, 62, 55, 0.1)',
+                    fill: true,
+                    tension: 0.35,
+                    pointBackgroundColor: '#013e37'
+                }]
+            },
+            options: {
+                plugins: { legend: { display: false } },
+                scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
+            }
+        });
+
+        // Graphique 3 : demandes par spécialité (barres)
+        const parSpecialite = {};
+        toutesLesDemandes.forEach(d => {
+            const tech = listeTechniciens.find(t => t.id === d.technicien_id);
+            const spec = tech?.specialite || 'Non assigné';
+            parSpecialite[spec] = (parSpecialite[spec] || 0) + 1;
+        });
+        new Chart(document.getElementById('chartSpecialites'), {
+            type: 'bar',
+            data: {
+                labels: Object.keys(parSpecialite),
+                datasets: [{
+                    label: 'Demandes',
+                    data: Object.values(parSpecialite),
+                    backgroundColor: '#013e37'
+                }]
+            },
+            options: {
+                plugins: { legend: { display: false } },
+                scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
+            }
+        });
+    }
+
+    // ============================================
+    // AJOUTER UN SPÉCIALISTE (modal)
+    // ============================================
+    document.getElementById('btnSaveSpecialiste').addEventListener('click', async () => {
+        const nom = document.getElementById('specNom').value.trim();
+        const specialite = document.getElementById('specSpecialite').value;
+        const email = document.getElementById('specEmail').value.trim();
+        const telephone = document.getElementById('specTel').value.trim();
+        const motDePasse = document.getElementById('specPassword').value.trim();
+
+        if (!nom || !email || !motDePasse) {
+            alert('Nom, email et mot de passe sont obligatoires.');
+            return;
+        }
+
+        const { error } = await supabaseClient
+            .from('technicien')
+            .insert({ nom, specialite, email, telephone, mot_de_passe: motDePasse });
+
+        if (error) {
+            alert('❌ Erreur : ' + error.message);
+            return;
+        }
+
+        alert('✅ Spécialiste ajouté.');
+        document.getElementById('specialisteForm').reset();
+        bootstrap.Modal.getInstance(document.getElementById('specialisteModal')).hide();
+
+        await chargerTechniciens();
+        afficherSpecialistes();
+        await chargerStatistiquesCompletes();
+    });
+
+    // ============================================
+    // INITIALISATION
+    // ============================================
+    document.addEventListener('DOMContentLoaded', async () => {
+        const accesOk = await verifierAcces();
+        if (!accesOk) return;
+
+        await chargerTechniciens();
+        afficherSpecialistes();
+        await chargerDemandes();
+        await chargerClients();
+        await chargerStatistiquesCompletes();
+    });
+    // ============================================
+// GÉNÉRATION PDF PROFESSIONNEL
+// ============================================
+function genererPdfRapportAdmin(data) {
+    try {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF('p', 'mm', 'a4');
+        const pageWidth = doc.internal.pageSize.getWidth();
+        const pageHeight = doc.internal.pageSize.getHeight();
+        
+        // ===== EN-TÊTE =====
+        // Bandeau supérieur
+        doc.setFillColor(1, 62, 55); // Vert SecureNet
+        doc.rect(0, 0, pageWidth, 45, 'F');
+        
+        // Logo / Titre
+        doc.setTextColor(255, 255, 255);
+        doc.setFontSize(24);
+        doc.setFont('helvetica', 'bold');
+        doc.text('SECURENET', 20, 25);
+        
+        doc.setFontSize(11);
+        doc.setFont('helvetica', 'normal');
+        doc.text('Rapport d\'audit - Administration', 20, 35);
+        
+        // Numéro de rapport
+        doc.setFontSize(10);
+        doc.setTextColor(200, 200, 200);
+        const numRapport = 'RAP-' + new Date().getFullYear() + '-' + String(Math.floor(Math.random() * 10000)).padStart(4, '0');
+        doc.text('N° ' + numRapport, pageWidth - 20, 25, { align: 'right' });
+        doc.text(new Date().toLocaleDateString('fr-FR'), pageWidth - 20, 35, { align: 'right' });
+        
+        // ===== LIGNE DE SÉPARATION =====
+        doc.setDrawColor(200, 200, 200);
+        doc.line(20, 50, pageWidth - 20, 50);
+        
+        let y = 60;
+        
+        // ===== SECTION : INFORMATIONS CLIENT =====
+        // Titre de section
+        doc.setFillColor(240, 248, 247);
+        doc.rect(20, y - 5, pageWidth - 40, 10, 'F');
+        doc.setTextColor(1, 62, 55);
+        doc.setFontSize(13);
+        doc.setFont('helvetica', 'bold');
+        doc.text('📋 INFORMATIONS CLIENT', 25, y + 2);
+        y += 18;
+        
+        // Grille d'informations
+        doc.setFontSize(10.5);
+        doc.setFont('helvetica', 'normal');
+        
+        const infos = [
+            ['👤 Nom du client', data.nomClient || '-'],
+            ['📞 Téléphone', data.telephone || '-'],
+            ['📍 Ville', data.ville || '-'],
+            ['🏢 Type de local', data.typeLocal || '-'],
+            ['📅 Date de la demande', data.date || '-']
+        ];
+        
+        infos.forEach(([label, value], index) => {
+            // Label
+            doc.setTextColor(100, 100, 100);
+            doc.setFont('helvetica', 'bold');
+            doc.text(label + ' :', 25, y);
+            
+            // Valeur
+            doc.setTextColor(0, 0, 0);
+            doc.setFont('helvetica', 'normal');
+            const xValue = 70;
+            const maxWidth = pageWidth - xValue - 25;
+            const splitValue = doc.splitTextToSize(value || '-', maxWidth);
+            doc.text(splitValue, xValue, y);
+            
+            // Ajuster y pour les lignes suivantes
+            y += (splitValue.length > 1 ? splitValue.length * 5 : 7);
+        });
+        
+        y += 8;
+        
+        // ===== SECTION : MESSAGE DU CLIENT =====
+        doc.setFillColor(240, 248, 247);
+        doc.rect(20, y - 5, pageWidth - 40, 10, 'F');
+        doc.setTextColor(1, 62, 55);
+        doc.setFontSize(13);
+        doc.setFont('helvetica', 'bold');
+        doc.text('💬 MESSAGE DU CLIENT', 25, y + 2);
+        y += 18;
+        
+        doc.setFontSize(10.5);
+        doc.setFont('helvetica', 'normal');
+        doc.setTextColor(50, 50, 50);
+        
+        const message = data.message || 'Aucun message fourni';
+        const splitMessage = doc.splitTextToSize(message, pageWidth - 50);
+        doc.text(splitMessage, 25, y);
+        y += (splitMessage.length * 6) + 15;
+        
+        // ===== SECTION : RAPPORT TECHNIQUE =====
+        if (data.reponse) {
+            doc.setFillColor(240, 248, 247);
+            doc.rect(20, y - 5, pageWidth - 40, 10, 'F');
+            doc.setTextColor(1, 62, 55);
+            doc.setFontSize(13);
+            doc.setFont('helvetica', 'bold');
+            doc.text('🔧 RAPPORT DU TECHNICIEN', 25, y + 2);
+            y += 18;
+            
+            // Nom du technicien
+            if (data.nomTechnicien) {
+                doc.setTextColor(100, 100, 100);
+                doc.setFontSize(10.5);
+                doc.setFont('helvetica', 'bold');
+                doc.text('Technicien :', 25, y);
+                doc.setTextColor(0, 0, 0);
+                doc.setFont('helvetica', 'normal');
+                doc.text(data.nomTechnicien, 55, y);
+                y += 10;
+            }
+            
+            // Réponse
+            doc.setFontSize(10.5);
+            doc.setFont('helvetica', 'normal');
+            doc.setTextColor(50, 50, 50);
+            
+            const reponse = data.reponse || 'Aucune réponse';
+            const splitReponse = doc.splitTextToSize(reponse, pageWidth - 50);
+            doc.text(splitReponse, 25, y);
+            y += (splitReponse.length * 6) + 15;
+        }
+        
+        // ===== SECTION : VALIDATION =====
+        y += 10;
+        doc.setDrawColor(200, 200, 200);
+        doc.line(20, y, pageWidth - 20, y);
+        y += 15;
+        
+        // Emplacements pour signatures
+        doc.setFontSize(10);
+        doc.setFont('helvetica', 'bold');
+        doc.setTextColor(100, 100, 100);
+        
+        // Signature Admin
+        doc.text('Signature de l\'administrateur', 30, y);
+        doc.rect(30, y + 3, 60, 25);
+        
+        // Signature Superviseur
+        doc.text('Signature du superviseur', pageWidth / 2 + 10, y);
+        doc.rect(pageWidth / 2 + 10, y + 3, 60, 25);
+        
+        // Date de validation
+        doc.setFont('helvetica', 'normal');
+        doc.setTextColor(150, 150, 150);
+        doc.text('Date de validation : ' + new Date().toLocaleDateString('fr-FR'), 30, y + 40);
+        
+        // ===== PIED DE PAGE =====
+        const footerY = pageHeight - 15;
+        doc.setDrawColor(200, 200, 200);
+        doc.line(20, footerY - 5, pageWidth - 20, footerY - 5);
+        
+        doc.setTextColor(150, 150, 150);
+        doc.setFontSize(8);
+        doc.setFont('helvetica', 'normal');
+        doc.text('SecureNet - Document confidentiel - Généré le ' + new Date().toLocaleString('fr-FR'), pageWidth / 2, footerY, { align: 'center' });
+        doc.text('Page 1/1', pageWidth - 20, footerY, { align: 'right' });
+        
+        // ===== TÉLÉCHARGEMENT =====
+        const nomFichier = `Rapport_Audit_${data.nomClient || 'client'}_${new Date().toISOString().slice(0,10)}.pdf`;
+        doc.save(nomFichier);
+        
+    } catch (error) {
+        console.error('Erreur génération PDF:', error);
+        alert('❌ Erreur lors de la génération du PDF.\n' + error.message);
+    }
+}
+
+// ============================================
+// ENVOI AU SUPERVISEUR PAR EMAIL
+// ============================================
+async function envoyerRapportSuperviseur(data) {
+    try {
+        // 1. Récupérer l'email du superviseur depuis la base de données
+        const { data: superviseur, error } = await supabaseClient
+            .from('administrateur')
+            .select('email, nom')
+            .eq('role', 'superviseur')
+            .maybeSingle();
+            
+        if (error || !superviseur) {
+            alert('⚠️ Aucun superviseur trouvé dans la base de données.');
+            return;
+        }
+        
+        // 2. Générer le PDF
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF('p', 'mm', 'a4');
+        // ... (même code que la fonction genererPdfRapportAdmin)
+        // On génère le PDF en mémoire
+        
+        // 3. Convertir le PDF en base64
+        const pdfBase64 = doc.output('datauristring');
+        
+        // 4. Envoyer l'email via Supabase Edge Function (ou autre service)
+        const response = await fetch('https://tuxviwabtpnkgacklgeo.supabase.co/functions/v1/send-email', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + SUPABASE_KEY
+            },
+            body: JSON.stringify({
+                to: superviseur.email,
+                subject: `📋 Nouveau rapport d'audit - ${data.nomClient}`,
+                html: `
+                    <h2>📋 Nouveau rapport d'audit disponible</h2>
+                    <p><strong>Client :</strong> ${data.nomClient}</p>
+                    <p><strong>Date :</strong> ${data.date}</p>
+                    <p><strong>Technicien :</strong> ${data.nomTechnicien || 'Non assigné'}</p>
+                    <p>Veuillez trouver le rapport complet en pièce jointe.</p>
+                    <hr>
+                    <p style="color: #666; font-size: 12px;">Ce message a été généré automatiquement par SecureNet.</p>
+                `,
+                attachment: {
+                    filename: `Rapport_Audit_${data.nomClient}_${new Date().toISOString().slice(0,10)}.pdf`,
+                    content: pdfBase64.split(',')[1]
+                }
+            })
+        });
+        
+        if (response.ok) {
+            alert('✅ Rapport envoyé avec succès au superviseur !');
+        } else {
+            const errorData = await response.json();
+            alert('❌ Erreur lors de l\'envoi : ' + errorData.message);
+        }
+        
+    } catch (error) {
+        console.error('Erreur envoi superviseur:', error);
+        alert('❌ Erreur lors de l\'envoi au superviseur.\n' + error.message);
+    }
+}
+
+// ============================================
+// FORMULAIRE D'ENVOI AVEC COMMENTAIRE
+// ============================================
+function afficherFormulaireEnvoi(data) {
+    // Créer un modal personnalisé
+    const modalHtml = `
+        <div class="modal fade" id="modalEnvoiSuperviseur" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header" style="background: #013e37; color: white;">
+                        <h5 class="modal-title">
+                            <i class="bi bi-send-fill me-2"></i>Envoyer au superviseur
+                        </h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Client</label>
+                            <p class="form-control-plaintext">${data.nomClient}</p>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Technicien</label>
+                            <p class="form-control-plaintext">${data.nomTechnicien || 'Non assigné'}</p>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Message au superviseur</label>
+                            <textarea class="form-control" id="messageSuperviseur" rows="4" 
+                                placeholder="Ajoutez un commentaire pour le superviseur..."></textarea>
+                        </div>
+                        <div class="alert alert-info">
+                            <i class="bi bi-info-circle-fill me-2"></i>
+                            Le PDF sera automatiquement joint à l'email.
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                        <button type="button" class="btn btn-success" id="btnEnvoyerSuperviseur">
+                            <i class="bi bi-send-fill me-2"></i>Envoyer
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    // Ajouter le modal au DOM
+    const modalContainer = document.createElement('div');
+    modalContainer.innerHTML = modalHtml;
+    document.body.appendChild(modalContainer);
+    
+    // Initialiser le modal
+    const modal = new bootstrap.Modal(document.getElementById('modalEnvoiSuperviseur'));
+    modal.show();
+    
+    // Gérer l'envoi
+    document.getElementById('btnEnvoyerSuperviseur').addEventListener('click', async () => {
+        const commentaire = document.getElementById('messageSuperviseur').value.trim();
+        await envoyerRapportSuperviseur({
+            ...data,
+            commentaire: commentaire
+        });
+        modal.hide();
+        setTimeout(() => {
+            document.getElementById('modalEnvoiSuperviseur').remove();
+        }, 300);
+    });
+    
+    // Nettoyer le modal après fermeture
+    document.getElementById('modalEnvoiSuperviseur').addEventListener('hidden.bs.modal', () => {
+        document.getElementById('modalEnvoiSuperviseur').remove();
+    });
+}
+
+// ============================================
+// MODIFICATION DU BOUTON PDF
+// ============================================
+// Modifier le bouton PDF pour ajouter l'option d'envoi
+function modifierBoutonsPDF() {
+    document.querySelectorAll('.btn-pdf-admin').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            
+            const data = {
+                nomClient: btn.getAttribute('data-nom-client'),
+                telephone: btn.getAttribute('data-telephone'),
+                ville: btn.getAttribute('data-ville'),
+                typeLocal: btn.getAttribute('data-type-local'),
+                date: btn.getAttribute('data-date'),
+                message: btn.getAttribute('data-message'),
+                nomTechnicien: btn.getAttribute('data-technicien'),
+                reponse: btn.getAttribute('data-reponse')
+            };
+            
+            // Afficher un menu contextuel
+            const choix = confirm(
+                '📄 Que voulez-vous faire ?\n\n' +
+                '• Cliquez sur "OK" pour générer le PDF et l\'envoyer au superviseur\n' +
+                '• Cliquez sur "Annuler" pour seulement télécharger le PDF'
+            );
+            
+            if (choix) {
+                // Générer le PDF et l'envoyer
+                genererPdfRapportAdmin(data);
+                setTimeout(() => {
+                    afficherFormulaireEnvoi(data);
+                }, 500);
+            } else {
+                // Seulement générer le PDF
+                genererPdfRapportAdmin(data);
+            }
+        });
+    });
+}
+
+// ============================================
+// INITIALISATION DES BOUTONS
+// ============================================
+// Appeler après le chargement des demandes
+const observer = new MutationObserver(() => {
+    modifierBoutonsPDF();
+});
+observer.observe(document.getElementById('demandesTableBody'), { childList: true, subtree: true });
+
+// Initialisation initiale
+setTimeout(modifierBoutonsPDF, 1000);
+</script>
+
+<script src="sidebar.js"></script>
+<script src="ThemeManager.js"></script>
+<script src="pdf-generator.js"></script>
+</body>
+</html>
