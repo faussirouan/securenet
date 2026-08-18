@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Auth Form — Login / Signup</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+ :root {
+    --bg: #0F0F1A;
+    --panel: #1A1A2E;
+    --panel-2: #22223B;
+    --border: #2D2D4A;
+    --text: #F5F0E8;
+    --text-dim: #A8A0B0;
+    --butter: #FFEFB3;
+    --butter-dark: #E8D58A;
+    --butter-glow: rgba(255, 239, 179, 0.12);
+    --green: #2ECC71;
+    --green-dark: #1A9C54;
+    --green-glow: rgba(46, 204, 113, 0.15);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    overflow-x: hidden;
+}
+  h1, h2, .brand { font-family: 'Space Grotesk', sans-serif; }
+
+  .bg-glow {
+    position: fixed;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--butter-glow), transparent 70%);
+    filter: blur(20px);
+    top: -150px; left: -150px;
+    z-index: 0;
+    pointer-events: none;
+  }
+  .bg-glow-2 {
+    position: fixed;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--green-glow), transparent 70%);
+    filter: blur(20px);
+    bottom: -150px; right: -150px;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .auth-container {
+    position: relative;
+    width: 100%;
+    max-width: 860px;
+    min-height: 520px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+    display: flex;
+    box-shadow: 0 40px 100px rgba(0,0,0,0.6);
+    z-index: 1;
+  }
+
+  .form-panel {
+    width: 55%;
+    padding: 56px 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .form-panel--login { position: relative; }
+  .form-panel--signup {
+    position: absolute;
+    top: 0; left: 0;
+    width: 55%;
+    height: 100%;
+    opacity: 0;
+    transform: translateX(-40px);
+    pointer-events: none;
+      background: var(--panel);
+    z-index: 10;
+  }
+  .auth-container.active .form-panel--login {
+    opacity: 0;
+    transform: translateX(40px);
+    pointer-events: none;
+  }
+  .auth-container.active .form-panel--signup {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
+  }
+
+  .eyebrow { color: var(--butter); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px; }
+  .form-panel h2 { font-size: 1.7rem; font-weight: 700; margin-bottom: 6px; color: var(--butter); }
+  .form-panel p.sub { color: var(--text-dim); font-size: 0.9rem; margin-bottom: 28px; }
+
+  .field-group { margin-bottom: 18px; }
+  .field-label { display: block; font-size: 0.78rem; color: var(--text-dim); margin-bottom: 6px; font-weight: 500; }
+  .field-input {
+    width: 100%;
+    background: var(--panel-2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+    color: var(--text);
+    font-size: 0.92rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .field-input:focus {
+    outline: none;
+    border-color: var(--green);
+    box-shadow: 0 0 0 3px var(--green-glow);
+  }
+  .field-input::placeholder { color: #5A5980; }
+
+  .field-row { display: flex; justify-content: space-between; align-items: center; font-size: 0.82rem; color: var(--text-dim); margin: 4px 0 22px; }
+  .field-row a { color: var(--green); text-decoration: none; }
+  .field-row a:hover { text-decoration: underline; }
+  .field-row label { display: flex; align-items: center; gap: 6px; cursor: pointer; }
+
+  .btn-auth {
+    width: 100%;
+    background: linear-gradient(90deg, var(--butter-dark), var(--green));
+    color: var(--bg);
+    border: none;
+    border-radius: 10px;
+    padding: 13px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: opacity 0.2s ease, transform 0.15s ease;
+  }
+  .btn-auth:hover { opacity: 0.85; }
+  .btn-auth:active { transform: scale(0.98); }
+
+  .divider { display: flex; align-items: center; gap: 12px; margin: 24px 0 18px; color: var(--text-dim); font-size: 0.78rem; }
+  .divider::before, .divider::after { content: ""; flex: 1; height: 1px; background: var(--border); }
+
+  .social-row { display: flex; gap: 12px; }
+  .social-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: var(--panel-2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 11px;
+    color: var(--text);
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background 0.2s ease;
+  }
+  .social-btn:hover { border-color: var(--butter); background: var(--panel); }
+  .social-btn svg { width: 18px; height: 18px; }
+
+  .switch-hint { text-align: center; margin-top: 24px; font-size: 0.85rem; color: var(--text-dim); }
+  .switch-hint button {
+    background: none; border: none; color: var(--green); font-weight: 600;
+    cursor: pointer; font-size: 0.85rem; padding: 0;
+  }
+  .switch-hint button:hover { text-decoration: underline; }
+
+  .overlay-panel {
+    position: absolute;
+    top: 0; right: 0;
+    width: 45%;
+    height: 100%;
+    background: linear-gradient(155deg, var(--butter-dark) 0%, var(--green) 55%, var(--green-dark) 100%);
+    clip-path: polygon(14% 0, 100% 0, 100% 100%, 0 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 48px 36px;
+    color: var(--bg);
+    transition: transform 900ms cubic-bezier(.77,0,.18,1), clip-path 900ms cubic-bezier(.77,0,.18,1);
+    z-index: 2;
+    overflow: hidden;
+  }
+  .overlay-panel::before {
+    content: "";
+    position: absolute;
+    width: 220px; height: 220px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+    top: -60px; right: -60px;
+  }
+  .overlay-panel::after {
+    content: "";
+    position: absolute;
+    width: 140px; height: 140px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.06);
+    bottom: -40px; left: -30px;
+  }
+  .auth-container.active .overlay-panel {
+    transform: translateX(-122.2%);
+    clip-path: polygon(0 0, 86% 0, 100% 100%, 0 100%);
+  }
+
+  .overlay-icon {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.12);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+  }
+  .overlay-panel h2 { font-size: 1.5rem; margin-bottom: 10px; color: var(--bg); }
+  .overlay-panel p { font-size: 0.88rem; opacity: 0.85; margin-bottom: 26px; line-height: 1.5; color: var(--bg); }
+  .btn-overlay {
+    background: transparent;
+    border: 1.5px solid rgba(0,0,0,0.3);
+    color: var(--bg);
+    border-radius: 10px;
+    padding: 11px 32px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease;
+  }
+  .btn-overlay:hover { background: rgba(0,0,0,0.08); border-color: var(--bg); }
+
+  @media (max-width: 760px) {
+    .auth-container { min-height: 460px; }
+    .form-panel { width: 62%; padding: 28px 20px; }
+    .form-panel--signup { width: 62%; }
+    .overlay-panel { width: 38%; padding: 24px 14px; }
+    .overlay-icon { width: 42px; height: 42px; font-size: 1.2rem; margin-bottom: 12px; }
+    .overlay-panel h2 { font-size: 1.05rem; }
+    .overlay-panel p { font-size: 0.72rem; margin-bottom: 16px; }
+    .btn-overlay { padding: 8px 16px; font-size: 0.78rem; }
+    .form-panel h2 { font-size: 1.25rem; }
+    .form-panel p.sub { font-size: 0.78rem; margin-bottom: 18px; }
+    .field-input { padding: 10px 12px; font-size: 0.85rem; }
+    .social-btn { font-size: 0.75rem; padding: 9px; }
+    .divider { margin: 16px 0 12px; }
+    .switch-hint { display: none; }
+  }
+
+  @media (max-width: 520px) {
+    .auth-container { flex-direction: column; min-height: 0; }
+    .form-panel, .form-panel--signup { width: 100%; padding: 32px 22px; }
+    .overlay-panel {
+      position: relative;
+      width: 100%;
+      height: 190px;
+      order: 2;
+      clip-path: polygon(0 0, 100% 0, 100% 82%, 0 100%);
+      transform: none !important;
+    }
+    .auth-container.active .overlay-panel {
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 82%);
+    }
+    .switch-hint { display: block; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-glow"></div>
+<div class="bg-glow-2"></div>
+
+<div class="auth-container" id="authContainer">
+
+  <!-- ===== CONNEXION ===== -->
+  <div class="form-panel form-panel--login">
+    <div class="eyebrow">Welcome back</div>
+    <h2>Sign in</h2>
+    <p class="sub">Entrez vos identifiants pour continuer.</p>
+    <form id="loginForm">
+      <div class="field-group">
+        <label class="field-label">Email</label>
+        <input type="email" class="field-input" placeholder="vous@exemple.com" required>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Mot de passe</label>
+        <input type="password" class="field-input" placeholder="••••••••" required>
+      </div>
+      <div class="field-row">
+        <label><input type="checkbox"> Se souvenir de moi</label>
+        <a href="#">Mot de passe oublié ?</a>
+      </div>
+      <button type="submit" class="btn-auth">Se connecter</button>
+    </form>
+    <div class="divider">ou continuer avec</div>
+    <div class="social-row">
+      <button class="social-btn" type="button">
+        <svg viewBox="0 0 24 24"><path fill="#EA4335" d="M12 10.2v3.9h5.5c-.24 1.4-1.7 4.1-5.5 4.1-3.3 0-6-2.7-6-6.2s2.7-6.2 6-6.2c1.9 0 3.1.8 3.8 1.5l2.6-2.5C16.9 2.9 14.7 2 12 2 6.9 2 2.7 6.2 2.7 12S6.9 22 12 22c6.9 0 9.3-4.8 9.3-7.3 0-.5-.1-.9-.1-1.3H12z"/></svg>
+        Google
+      </button>
+    </div>
+    <div class="switch-hint">Pas encore de compte ? <button type="button" id="switchToSignup">Créer un compte</button></div>
+  </div>
+
+  <!-- ===== INSCRIPTION ===== -->
+  <div class="form-panel form-panel--signup">
+    <div class="eyebrow">SecureNet</div>
+    <h2>Créer un compte</h2>
+    <p class="sub">Rejoignez-nous en quelques secondes.</p>
+    <form id="signupForm">
+      <div class="field-group">
+        <label class="field-label">Nom complet</label>
+        <input type="text" class="field-input" placeholder="Votre nom" required>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Email</label>
+        <input type="email" class="field-input" placeholder="vous@exemple.com" required>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Mot de passe</label>
+        <input type="password" class="field-input" placeholder="••••••••" required>
+      </div>
+      <button type="submit" class="btn-auth">Créer mon compte</button>
+    </form>
+    <div class="divider">ou continuer avec</div>
+    <div class="social-row">
+      <button class="social-btn" type="button">
+        <svg viewBox="0 0 24 24"><path fill="#EA4335" d="M12 10.2v3.9h5.5c-.24 1.4-1.7 4.1-5.5 4.1-3.3 0-6-2.7-6-6.2s2.7-6.2 6-6.2c1.9 0 3.1.8 3.8 1.5l2.6-2.5C16.9 2.9 14.7 2 12 2 6.9 2 2.7 6.2 2.7 12S6.9 22 12 22c6.9 0 9.3-4.8 9.3-7.3 0-.5-.1-.9-.1-1.3H12z"/></svg>
+        Google
+      </button>
+    </div>
+    <div class="switch-hint">Déjà un compte ? <button type="button" id="switchToLogin">Se connecter</button></div>
+  </div>
+
+  <!-- ===== OVERLAY ===== -->
+  <div class="overlay-panel" id="overlayPanel">
+    <div class="overlay-icon">👋</div>
+    <h2 id="overlayTitle">Nouveau ici ?</h2>
+    <p id="overlayText">Créez un compte et débloquez l'expérience complète.</p>
+    <button class="btn-overlay" id="overlayBtn">Créer un compte</button>
+  </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+  // ============================================
+  // INITIALISATION SUPABASE
+  // ============================================
+
+  const SUPABASE_URL = 'https://tuxviwabtpnkgacklgeo.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR1eHZpd2FidHBua2dhY2tsZ2VvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY3Njg4ODUsImV4cCI6MjEwMjM0NDg4NX0.WBZfo-LiTC_nu66BCN3E5KvkoKRz8mk5Lz3X1ibhP0w';
+
+  const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  // ============================================
+  // TOGGLE CONNEXION / INSCRIPTION
+  // ============================================
+
+  const container = document.getElementById('authContainer');
+  const overlayTitle = document.getElementById('overlayTitle');
+  const overlayText = document.getElementById('overlayText');
+  const overlayBtn = document.getElementById('overlayBtn');
+  const switchToSignup = document.getElementById('switchToSignup');
+  const switchToLogin = document.getElementById('switchToLogin');
+
+  function toggleAuth(toSignup) {
+    console.log('toggleAuth appelé avec :', toSignup);
+
+    if (toSignup) {
+      container.classList.add('active');
+      overlayTitle.textContent = "Déjà inscrit ?";
+      overlayText.textContent = "Connectez-vous pour retrouver votre espace.";
+      overlayBtn.textContent = "Se connecter";
+    } else {
+      container.classList.remove('active');
+      overlayTitle.textContent = "Nouveau ici ?";
+      overlayText.textContent = "Créez un compte et débloquez l'expérience complète.";
+      overlayBtn.textContent = "Créer un compte";
+    }
+  }
+
+  // Événements pour les boutons
+  if (overlayBtn) {
+    overlayBtn.addEventListener('click', function() {
+      toggleAuth(true);
+    });
+  }
+
+  if (switchToSignup) {
+    switchToSignup.addEventListener('click', function() {
+      toggleAuth(true);
+    });
+  }
+
+  if (switchToLogin) {
+    switchToLogin.addEventListener('click', function() {
+      toggleAuth(false);
+    });
+  }
+
+  // ============================================
+  // CONNEXION AVEC SUPABASE
+  // ============================================
+
+  document.getElementById('loginForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const email = this.querySelector('input[type="email"]').value;
+    const password = this.querySelector('input[type="password"]').value;
+
+    if (!email || !password) {
+      alert('Veuillez remplir tous les champs.');
+      return;
+    }
+
+    try {
+      const { data, error } = await supabaseClient.auth.signInWithPassword({
+        email: email,
+        password: password
+      });
+
+      if (error) throw error;
+
+      alert('✅ Connexion réussie !');
+      window.location.href = "accueil.html";
+
+    } catch (error) {
+      alert('❌ Erreur : ' + error.message);
+    }
+  });
+
+  // ============================================
+  // INSCRIPTION - VERSION UNIQUE
+  // ============================================
+
+  document.getElementById('signupForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const name = this.querySelector('input[type="text"]').value;
+    const email = this.querySelector('input[type="email"]').value;
+    const password = this.querySelector('input[type="password"]').value;
+
+    if (!name || !email || !password) {
+      alert('Veuillez remplir tous les champs.');
+      return;
+    }
+
+    try {
+      // 1. Crée le compte dans auth.users
+      const { data, error } = await supabaseClient.auth.signUp({
+        email: email,
+        password: password,
+        options: {
+          data: {
+            full_name: name
+          }
+        }
+      });
+
+      if (error) throw error;
+
+      // 2. Crée la fiche client
+      if (data.user) {
+        const { error: clientError } = await supabaseClient
+          .from('client')
+          .insert({ 
+            id: data.user.id, 
+            nom: name 
+          });
+
+        if (clientError) {
+          console.error('Erreur création fiche client :', clientError);
+          // Si erreur de contrainte, on continue quand même
+          if (clientError.code !== '23505') {
+            throw clientError;
+          }
+        }
+      }
+
+      alert('✅ Inscription réussie ! Bienvenue ' + name);
+
+      // 3. Rediriger vers la page d'accueil
+      window.location.href = "accueil.html";
+
+    } catch (error) {
+      alert('❌ Erreur : ' + error.message);
+    }
+  });
+
+  console.log('✅ Formulaire d\'authentification chargé !');
+</script>
+</body>
+</html>

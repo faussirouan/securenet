@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Bootstrap 5 + icônes + Google Fonts -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <title>SecureNet · Découvrir nos services</title>
+  <link rel="stylesheet" href="découvrir.css">
+</head>
+<body>
+
+  <div class="container-fluid bg-dark-custom text-white px-0">
+        <div class="hero-services text-center">
+      <div class="container">
+        <span class="section-badge"><i class="bi bi-grid-3x3-gap-fill me-2"></i>Nos Services</span>
+        <h1 class="hero-title">
+          SecureNet vous propose <span>des services sur mesure</span>
+        </h1>
+        <p class="hero-sub">
+          <strong>Trois piliers</strong> pour un réseau en toute sécurité — 
+          adaptés à vos besoins, avec une approche locale et réactive.
+        </p>
+      </div>
+    </div>
+
+    <!-- ====== 3 CARTES SERVICES ====== -->
+    <div class="container mt-4 mt-lg-5 pt-2 pb-4">
+      <div class="row g-4">
+
+        <!-- 1 · AUDITS -->
+        <div class="col-md-4">
+          <div class="service-card">
+            <div class="service-icon">
+              <i class="bi bi-shield-check"></i>
+            </div>
+            <h3 class="service-title">Audits</h3>
+            <p class="service-desc">
+              On identifie les failles <strong>avant</strong> qu'un incident ne les relève : 
+              ports ouverts, mots de passe faibles, vulnérabilités connues, 
+              chiffrement absent, et bien plus.
+            </p>
+            <span class="service-tag"><i class="bi bi-arrow-right me-1"></i> Diagnostic complet</span>
+          </div>
+        </div>
+
+        <!-- 2 · INSTALLATION -->
+        <div class="col-md-4">
+          <div class="service-card">
+            <div class="service-icon">
+              <i class="bi bi-hdd-stack"></i>
+            </div>
+            <h3 class="service-title">Installation</h3>
+            <p class="service-desc">
+              <strong>Câblage réseau</strong> – Pare-feu – Sécurisation Wi‑Fi – 
+              Configuration de votre infrastructure. Une infrastructure <strong>sécurisée, fiable et performante</strong>, 
+              pensée pour durer.
+            </p>
+            <span class="service-tag"><i class="bi bi-arrow-right me-1"></i> Clé en main</span>
+          </div>
+        </div>
+
+        <!-- 3 · VIDÉOSURVEILLANCE -->
+        <div class="col-md-4">
+          <div class="service-card">
+            <div class="service-icon">
+              <i class="bi bi-camera-video"></i>
+            </div>
+            <h3 class="service-title">Vidéosurveillance</h3>
+            <p class="service-desc">
+              Des <strong>forfaits sur mesure</strong> pour protéger vos locaux 
+              24h/24. Caméras haute définition, stockage sécurisé, 
+              et accès à distance pour une tranquillité d'esprit totale.
+            </p>
+            <span class="service-tag"><i class="bi bi-arrow-right me-1"></i> Sur devis</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="container pb-5">
+      <div class="value-banner row align-items-center g-4">
+        <div class="col-md-2 text-center text-md-start">
+          <i class="bi bi-laptop"></i>
+        </div>
+        <div class="col-md-8">
+          <h4>Une approche 100% locale</h4>
+          <p>
+            Nous intervenons partout au Cameroun avec une équipe d'experts passionnés. 
+            Réactivité, transparence et solutions adaptées à votre réalité.
+          </p>
+        </div>
+        <div class="col-md-2 text-center text-md-end">
+          <span class="badge badge-local px-4 py-2 rounded-pill fs-6 fw-normal">
+            <i class="bi bi-geo-alt me-1"></i> local
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="fonctions">
+ <div class="row text-center d-flex">
+  <div class=" px-5 col-md-6 forfaits ">
+        <a href="#nosforfaits">
+            <button type="button" class="btn btn-outline-success m-5 rounded-pill px-4 py-2 fw-semibold border-2">
+                <i class="bi bi-wallet me-2"></i> Découvrez nos services
+            </button>
+        </a>
+    </div>
+   <div class="col-md-6">
+     <a href="index.html">
+      <button type="button" class=" btn btn-outline-info m-5 m-5 rounded-pill px-4 py-2 fw-semibold border-2">retour à la page d'accueil</button>
+    </a>
+   </div>
+ </div>
+    <section id="nosforfaits">
+        <div class="container">
+            <h2 class="text-center mb-4">Nos Services</h2>
+            <p class="text-center mb-5">Découvrez les travaux accomplis par nos experts</p>
+            <h5 class="fo">Nos services</h5>
+            <h3>Sécurisez votre réseau,à votre rythme</h3>
+         <!-- Boutons de filtre avec empilement responsive -->
+<div class="boutons-container">
+    <div class="boutons-wrapper">
+        <button type="button" class="bout btn btn-outline active" data-filter="tous">
+            <i class="bi bi-grid-fill me-2"></i> Tous
+        </button>
+        <button type="button" class="bout btn btn-outline" data-filter="audit">
+            <i class="bi bi-search me-2"></i> Audits
+        </button>
+        <button type="button" class="bout btn btn-outline" data-filter="installation">
+            <i class="bi bi-hdd-stack me-2"></i> Installation
+        </button>
+        <button type="button" class="bout btn btn-outline" data-filter="video">
+            <i class="bi bi-camera-video me-2"></i> Vidéosurveillance
+        </button>
+    </div>
+</div>
+        </div>
+         <div class="container mt-4 mt-lg-5 pt-2 pb-4  gap-5 bonjour">
+      <div class="row g-4">
+        <div class="col-md-3">
+          <div class="service-card">
+            <div class="service-icon">
+              <i class="bi bi-diagram-3"></i>           <!-- Réseau -->
+            </div>
+            <h6 class="service-title fs-5 text-dark">Audit</h6>
+            <div class="service-desc">
+                <strong class="fs-4">Audit réseau complet</strong><br>
+                <span class="fw-bold fo fs-4">Gratuit</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="service-card">
+            <div class="service-icon">
+              <i class="bi bi-hdd-stack"></i>
+            </div>
+            <h6 class="service-title fs-5 text-dark">Installation</h6>
+            <div class="service-desc">
+                <strong class="fs-4">Audit + rapport détaillé</strong><br>
+                <span class="fw-bold fo fs-4">5000 FCFA</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="service-card">
+            <div class="service-icon">
+              <i class="bi bi-camera-video"></i>
+            </div>
+            <h6 class="service-title fs-5 text-dark">Vidéosurveillance</h6>
+            <div class="service-desc">
+                <strong class="fs-4">Installation de systèmes de vidéosurveillance et cable réseau</strong><br>
+                <span class="fw-bold fo fs-4">Dès 25000 FCFA</span>
+            </div>
+          </div>
+        </div>
+          <div class="col-md-3">
+          <div class="service-card">
+            <div class="service-icon">
+              <i class="bi bi-camera-video"></i>
+            </div>
+            <h6 class="service-title fs-5 text-dark">Installation</h6>
+            <div class="service-desc">
+                              <strong class="fs-4">Configuration des pare-feu</strong><br>
+                <span class="fw-bold fo fs-4">10 000 FCFA</span>
+            </div>
+          </div>
+        </div>
+      </div>
+       <div class="row g-4 py-5">
+        <div class="col-md-3">
+          <div class="service-card">
+            <div class="service-icon">
+              <i class="bi bi-search"></i>
+            </div>
+            <h6 class="service-title fs-5 text-dark">Installation</h6>
+            <div class="service-desc">
+                <strong class="fs-4">Sécurisation Wi-Fi entreprise </strong><br>
+                <span class="fw-bold fo fs-4">8000 FCFA</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="service-card">
+            <div class="service-icon">
+              <i class="bi bi-camera-reels"></i>        <!-- Plusieurs caméras -->
+            </div>
+            <h6 class="service-title fs-5 text-dark">Surveillance</h6>
+            <div class="service-desc">
+                <strong class="fs-4">Caméra unique + config</strong><br>
+                <span class="fw-bold fo fs-4">35 000 FCFA</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="service-card">
+            <div class="service-icon">
+<i class="bi bi-camera-reels"></i>        <!-- Plusieurs caméras -->
+            </div>
+            <h6 class="service-title fs-5 text-dark">Vidéosurveillance</h6>
+            <div class="service-desc">
+                <strong class="fs-4">Kit 4 caméras + enregistreur</strong><br>
+                <span class="fw-bold fo fs-4"> 120 000 FCFA</span>
+            </div>
+          </div>
+        </div>
+          <div class="col-md-3">
+          <div class="service-card">
+            <div class="service-icon">
+              <i class="bi bi-tools"></i>
+            </div>
+            <h6 class="service-title fs-5 text-dark">surveillance</h6>
+            <div class="service-desc">
+                <strong class="fs-4">Maintenance mensuelle</strong><br>
+                <span class="fw-bold fo fs-4">15 000 FCFA/mois </span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="row ">
+        <div class="dev">
+          <p><h4>faites vérifier votre réseau</h4></p>
+        </div>
+        <div class="col-md-6">
+         <!-- ====== FIELDSET AUDIT RESPONSIVE ====== -->
+  <fieldset class="text-center">
+    <h5>📁 Audit réseau.log</h5>
+    <div class="bonj">
+      <span>Pare-feu</span>
+      <span class="espace text-success">✔ actif</span>
+    </div>
+    <div class="bonj">
+      <span>Ports ouverts non sécurisés</span>
+      <span class="espace">⚠ 3 menaces détectés</span>
+    </div>
+    <div class="bonj">
+      <span>Mot de passe routeur</span>
+      <span class="espace1">⚠ par défaut</span>
+    </div>
+    <div class="bonj">
+      <span>Chiffrement Wi-Fi</span>
+      <span class="espace2 text-success">✔ WPA3</span>
+    </div>
+    <div class="bonj">
+      <span>Vidéosurveillance</span>
+      <span class="espace3">⚠ non installé</span>
+    </div>
+    <p>➡ 3 vulnérabilités trouvées. Un technicien SecureNet peut intervenir.</p>
+  </fieldset>
+        </div>
+        <div class="col-md-6">
+       <!-- ==========================================
+    BOUTON MODAL À COPIER/COLLER DANS VOTRE PAGE
+    ========================================== -->
+    <button class="btn-modal-open" id="openModalBtn">
+        <span>📩</span> Demander un devis
+    </button>
+
+    <!-- ==========================================
+    MODAL (formulaire complet)
+    ========================================== -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-content">
+            <button class="btn-close-modal" id="closeModalBtn">✕</button>
+
+            <h2>📋 Demande de service</h2>
+            <div class="subtitle">Remplissez les informations ci‑dessous, nous vous recontacterons rapidement.</div>
+
+            <form id="contactForm" action="#" method="POST">
+                <div class="form-group">
+                    <label for="nom">Nom / Entreprise <span class="required-star">*</span></label>
+                    <input type="text" id="nom" name="nom" placeholder="Ex: Dupont SARL" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="telephone">Téléphone <span class="required-star">*</span></label>
+                    <input type="tel" id="telephone" name="telephone" placeholder="06 12 34 56 78" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email <span class="optional-badge">Optionnel</span></label>
+                    <input type="email" id="email" name="email" placeholder="votre@email.fr">
+                </div>
+
+                <div class="form-group">
+                    <label for="typeLocal">Type de local <span class="required-star">*</span></label>
+                    <select id="typeLocal" name="typeLocal" required>
+                        <option value="">-- Choisir --</option>
+                        <option value="Bureau/Entreprise">🏢 Bureau / Entreprise</option>
+                        <option value="Domicile">🏠 Domicile</option>
+                        <option value="Commerce">🛍️ Commerce</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="ville">Ville <span class="required-star">*</span></label>
+                    <input type="text" id="ville" name="ville" placeholder="Ex: douala" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="besoin">Décrivez votre besoin</label>
+                    <textarea id="besoin" name="besoin" placeholder="Ex: Wi-Fi instable, besoin de caméras, installation réseau…"></textarea>
+                </div>
+
+                <button type="submit" class="btn-submit">
+                    <span>📩</span> Envoyer la demande
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==========================================
+    JAVASCRIPT (gestion ouverture/fermeture)
+    ========================================== -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+ <script>
+    // ============================================
+    // supabaseClient est déjà déclaré plus haut dans cette page,
+    // on le réutilise directement ici, pas besoin de le redéclarer.
+    // ============================================
+
+    const openBtn = document.getElementById('openModalBtn');
+    const closeBtn = document.getElementById('closeModalBtn');
+    const overlay = document.getElementById('modalOverlay');
+    const contactForm = document.getElementById('contactForm');
+
+    // Ouvrir la modal — vérifie d'abord que le client est connecté
+    openBtn.addEventListener('click', async function() {
+        const { data: { session } } = await supabaseClient.auth.getSession();
+
+        if (!session) {
+            alert('Veuillez vous connecter ou créer un compte avant de faire une demande.');
+            window.location.href = 'auth-form.html';
+            return;
+        }
+
+        overlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    });
+
+    // Fermer la modal
+    closeBtn.addEventListener('click', function() {
+        overlay.classList.remove('active');
+        document.body.style.overflow = '';
+    });
+
+    // Fermer en cliquant à l'extérieur
+    overlay.addEventListener('click', function(event) {
+        if (event.target === overlay) {
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    });
+
+    // Fermer avec la touche Echap
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape' && overlay.classList.contains('active')) {
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    });
+
+    // ============================================
+    // ENVOI DE LA DEMANDE VERS SUPABASE
+    // ============================================
+    contactForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        const entreprise = document.getElementById('nom').value;
+        const telephone = document.getElementById('telephone').value;
+        const typeLocal = document.getElementById('typeLocal').value;
+        const ville = document.getElementById('ville').value;
+        const besoin = document.getElementById('besoin').value;
+
+        if (!entreprise || !telephone || !typeLocal || !ville) {
+            alert('Veuillez remplir tous les champs obligatoires.');
+            return;
+        }
+
+        try {
+            const { data: { user } } = await supabaseClient.auth.getUser();
+
+            if (!user) {
+                alert('Session expirée, veuillez vous reconnecter.');
+                window.location.href = 'auth-form.html';
+                return;
+            }
+
+            // Crée la fiche client si elle n'existe pas encore, ne fait rien si elle existe déjà
+            const nomClient = user.user_metadata?.full_name || user.email;
+            const { error: upsertClientError } = await supabaseClient
+                .from('client')
+                .upsert(
+                    { id: user.id, nom: nomClient },
+                    { onConflict: 'id', ignoreDuplicates: true }
+                );
+
+            if (upsertClientError) throw upsertClientError;
+
+            const { error } = await supabaseClient
+                .from('demande_audit')
+                .insert({
+                    client_id: user.id,
+                    telephone: telephone,
+                    entreprise: entreprise,
+                    type_local: typeLocal,
+                    ville: ville,
+                    message: besoin
+                });
+
+            if (error) throw error;
+
+            alert('✅ Votre demande a été envoyée ! Un technicien vous contactera bientôt.');
+            contactForm.reset();
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+
+        } catch (error) {
+            alert('❌ Erreur : ' + error.message);
+        }
+    });
+</script>
+        </div>
+      </div>
+    </div>
+    </section>
+    
+    </div>
+    <!-- ====== PETIT FOOTER ====== -->
+    <div class="container-fluid border-top border-secondary border-opacity-10 py-3">
+      <div class="row align-items-center">
+        <div class="col-md-6 text-center text-md-start text-secondary small">
+          </div>
+        </div>
+
+      </div>
+    </div>
+    </div>
+    <!-- ====== PETIT FOOTER ====== -->
+    <div class="container-fluid border-top border-secondary border-opacity-10 py-3">
+      <div class="row align-items-center">
+        <div class="col-md-6 text-center text-md-start text-secondary small">
+          <i class="bi bi-shield-lock me-1"></i> SecureNet · protection IT
+        </div>
+        <div class="col-md-6 text-center text-md-end text-secondary small">
+          <i class="bi bi-arrow-right me-1"></i> Découvrez nos offres
+        </div>
+      </div>
+    </div>
+  </div> 
+  
+   <script>
+    // Connexion à Supabase
+  const SUPABASE_URL = "https://tuxviwabtpnkgacklgeo.supabase.co";
+  const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR1eHZpd2FidHBua2dhY2tsZ2VvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY3Njg4ODUsImV4cCI6MjEwMjM0NDg4NX0.WBZfo-LiTC_nu66BCN3E5KvkoKRz8mk5Lz3X1ibhP0w";
+
+  const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  // Test de connexion
+  console.log("Supabase connecté :", supabaseClient);
+   </script>
+   <script>
+    // ============================================================
+    // GESTION DES BOUTONS DE FILTRE (Audits, Installation, Vidéosurveillance)
+    // ============================================================
+    
+    // Sélectionne tous les boutons de filtre
+    const filterBtns = document.querySelectorAll('.boutons .bout');
+    
+    // Fonction qui filtre les cartes selon la catégorie sélectionnée
+    function filterServices(category) {
+        // Sélectionne toutes les cartes de services dans .bonjour
+        const allCards = document.querySelectorAll('.bonjour .col-md-3');
+        
+        allCards.forEach(card => {
+            // Récupère le titre de la carte (h6 ou h3 avec classe service-title)
+            const titleEl = card.querySelector('.service-title');
+            if (!titleEl) {
+                // Si pas de titre, on affiche la carte par défaut
+                card.style.display = 'block';
+                return;
+            }
+            
+            // Nettoyer le texte du titre pour la comparaison
+            let cardCategory = titleEl.textContent.trim().toLowerCase();
+            
+            // Gestion des variantes (ex: "Surveillance" vs "Vidéosurveillance")
+            if (cardCategory === 'surveillance' || cardCategory === 'vidéosurveillance') {
+                cardCategory = 'vidéosurveillance';
+            }
+            if (cardCategory === 'audits' || cardCategory === 'audit') {
+                cardCategory = 'audit';
+            }
+            if (cardCategory === 'installation' || cardCategory === 'installations') {
+                cardCategory = 'installation';
+            }
+            
+            // Comparaison avec la catégorie sélectionnée
+            if (category === 'tous' || cardCategory === category) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+    
+    // Ajoute un événement click sur chaque bouton de filtre
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            // Retire la classe active de tous les boutons
+            filterBtns.forEach(b => b.classList.remove('active'));
+            // Ajoute la classe active au bouton cliqué
+            this.classList.add('active');
+            
+            // Récupère la catégorie depuis le texte du bouton (nettoie)
+            let category = this.textContent.trim().toLowerCase();
+            if (category === 'audits') category = 'audit';
+            if (category === 'vidéosurveillance' || category === 'vidéosurveillance') category = 'vidéosurveillance';
+            
+            // Applique le filtre
+            filterServices(category);
+        });
+    });
+    
+    // Par défaut, active le premier bouton ("Tous") et affiche tout
+    if (filterBtns.length > 0) {
+        filterBtns[0].classList.add('active');
+        filterServices('tous');
+    }
+    
+    // ============================================================
+    // STYLES POUR LES BOUTONS ACTIFS
+    // ============================================================
+    const style = document.createElement('style');
+    style.textContent = `
+        .boutons .bout.active {
+            background-color: #3FB950 !important;
+            color: #06210C !important;
+            border-color: #3FB950 !important;
+        }
+        .boutons .bout {
+            transition: all 0.3s ease;
+        }
+        .bonjour .col-md-3 {
+            transition: all 0.3s ease;
+        }
+    `;
+    document.head.appendChild(style);
+    document.querySelectorAll('.service-card').forEach((card, index) => {
+    const tooltip = document.createElement('div');
+    tooltip.className = 'card-tooltip-messenger';
+    
+    const title = card.querySelector('.service-title');
+    const titleText = title ? title.textContent.trim().toLowerCase() : '';
+    
+    // Différents messages selon la catégorie
+    const messages = {
+        'audit': { sender: '🔍 SecureNet Audit', text: 'Audit réseau complet - Gratuit' },
+        'installation': { sender: '🔧 SecureNet Install', text: 'Installation clé en main' },
+        'video': { sender: '📹 SecureNet Cam', text: 'Protection 24h/24' },
+        'maintenance': { sender: '🛠️ SecureNet Support', text: 'Maintenance mensuelle' }
+    };
+    
+    let msg = messages.default || { sender: 'SecureNet', text: 'Sécurisez votre réseau' };
+    
+    if (titleText.includes('audit')) msg = messages.audit;
+    else if (titleText.includes('installation') || titleText.includes('pare-feu')) msg = messages.installation;
+    else if (titleText.includes('vidéosurveillance') || titleText.includes('surveillance') || titleText.includes('caméra')) msg = messages.video;
+    else if (titleText.includes('maintenance')) msg = messages.maintenance;
+    
+    const initial = msg.sender.charAt(0);
+    
+    tooltip.innerHTML = `
+        <div class="avatar">${initial}</div>
+        <div class="message-content">
+            <span class="sender">${msg.sender}</span>
+            <span class="text">${msg.text}</span>
+        </div>
+    `;
+    
+    card.style.position = 'relative';
+    card.appendChild(tooltip);
+});
+// ============================================================
+// FILTRAGE DES SERVICES AVEC LES BOUTONS
+// ============================================================
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Sélectionne tous les boutons de filtre
+    const filterBtns = document.querySelectorAll('.boutons-wrapper .bout');
+    
+    // Fonction de filtrage
+    function filterServices(category) {
+        const cards = document.querySelectorAll('.bonjour .col-md-3');
+        
+        cards.forEach(card => {
+            const titleEl = card.querySelector('.service-title');
+            if (!titleEl) {
+                card.style.display = 'block';
+                return;
+            }
+            
+            const cardCategory = titleEl.textContent.trim().toLowerCase();
+            let show = false;
+            
+            switch(category) {
+                case 'tous':
+                    show = true;
+                    break;
+                case 'audit':
+                    show = cardCategory.includes('audit') || cardCategory.includes('audits');
+                    break;
+                case 'installation':
+                    show = cardCategory.includes('installation') || 
+                           cardCategory.includes('câblage') || 
+                           cardCategory.includes('pare-feu') ||
+                           cardCategory.includes('wifi');
+                    break;
+                case 'video':
+                    show = cardCategory.includes('vidéosurveillance') || 
+                           cardCategory.includes('surveillance') ||
+                           cardCategory.includes('caméra') ||
+                           cardCategory.includes('camera');
+                    break;
+                default:
+                    show = true;
+            }
+            
+            if (show) {
+                card.style.display = 'block';
+                card.style.animation = 'fadeIn 0.4s ease forwards';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+    
+    // Ajoute les événements de clic
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            // Retire la classe active de tous les boutons
+            filterBtns.forEach(b => b.classList.remove('active'));
+            
+            // Ajoute la classe active au bouton cliqué
+            this.classList.add('active');
+            
+            // Récupère la catégorie
+            const category = this.dataset.filter;
+            
+            // Applique le filtre
+            filterServices(category);
+        });
+    });
+    
+    // Animation fadeIn pour les cartes
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95) translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+    `;
+    document.head.appendChild(style);
+});
+</script>
+
+</body>
+</html>
