@@ -1125,11 +1125,17 @@ async function chargerClients() {
 // ============================================
 // STATISTIQUES
 // ============================================
-let chartsCreees = false;
 
 // ============================================
-// STATISTIQUES - CORRIGÉ
+// STATISTIQUES - VERSION CORRIGÉE
 // ============================================
+let chartsCreees = false;
+let chartInstances = {
+    statuts: null,
+    evolution: null,
+    specialites: null
+};
+
 async function chargerStatistiquesCompletes() {
     const nbSpecialistes = listeTechniciens.length;
     const nbDemandesTotal = toutesLesDemandes.length;
@@ -1138,6 +1144,7 @@ async function chargerStatistiquesCompletes() {
     const nbTraitees = toutesLesDemandes.filter(d => d.statut === 'traite').length;
     const clientsUniques = new Set(toutesLesDemandes.map(d => d.client_id)).size;
 
+    // Mettre à jour les cartes
     document.getElementById('dashSpecialistes').textContent = nbSpecialistes;
     document.getElementById('dashDemandesTotal').textContent = nbDemandesTotal;
     document.getElementById('dashEnAttente').textContent = nbNouvelles + nbAssignees;
@@ -1150,21 +1157,19 @@ async function chargerStatistiquesCompletes() {
     document.getElementById('stats-demandes-traitees').textContent = nbTraitees;
     document.getElementById('stats-clients-uniques').textContent = clientsUniques;
 
-    // ACTIVITÉ RÉCENTE - CORRIGÉ
+    // ACTIVITÉ RÉCENTE
     const activiteEl = document.getElementById('activiteRecente');
     if (activiteEl) {
         const recentes = [...toutesLesDemandes].slice(0, 5);
         activiteEl.innerHTML = recentes.length === 0
-            ? `<li><span class="activity-text text-muted" data-i18n="Aucune activité récente.">Aucune activité récente.</span></li>`
+            ? `<li><span class="activity-text text-muted">Aucune activité récente.</span></li>`
             : recentes.map(d => {
                 const couleur = d.statut === 'traite' ? 'green' : d.statut === 'assigne' ? 'yellow' : 'red';
-                // PRIORITÉ à entreprise (nom saisi par le client)
                 const nom = d.entreprise || d.client?.nom || 'Client';
-                // Traduire les statuts
                 const statutTraduit = {
-                    'nouveau': t('Nouveau'),
-                    'assigne': t('Assigné'),
-                    'traite': t('Traité')
+                    'nouveau': 'Nouveau',
+                    'assigne': 'Assigné',
+                    'traite': 'Traité'
                 }[d.statut] || d.statut;
                 
                 return `
@@ -1177,13 +1182,180 @@ async function chargerStatistiquesCompletes() {
             }).join('');
     }
 
-    // Graphiques (inchangé)
-    if (!chartsCreees) {
-        chartsCreees = true;
-        // ... le reste du code
+    // === GRAPHIQUES - TOUJOURS CRÉÉS ===
+    creerGraphiques(nbNouvelles, nbAssignees, nbTraitees);
+}
+
+// ============================================
+// CRÉER LES GRAPHIQUES - VERSION CORRIGÉE
+// ============================================
+function creerGraphiques(nbNouvelles, nbAssignees, nbTraitees) {
+    // Vérifier que Chart.js est chargé
+    if (typeof Chart === 'undefined') {
+        console.error('❌ Chart.js n\'est pas chargé !');
+        return;
+    }
+
+    try {
+        // 1. Graphique Répartition (Camembert)
+        const ctxStatuts = document.getElementById('chartStatuts');
+        if (ctxStatuts) {
+            // Détruire l'ancien graphique s'il existe
+            if (chartInstances.statuts) {
+                chartInstances.statuts.destroy();
+            }
+            
+            chartInstances.statuts = new Chart(ctxStatuts, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Nouvelles', 'Assignées', 'Traitées'],
+                    datasets: [{
+                        data: [nbNouvelles || 0, nbAssignees || 0, nbTraitees || 0],
+                        backgroundColor: ['#dc3545', '#ffc107', '#013e37'],
+                        borderWidth: 2,
+                        borderColor: '#fff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 20,
+                                usePointStyle: true,
+                                pointStyle: 'circle'
+                            }
+                        }
+                    }
+                }
+            });
+            console.log('✅ Graphique Répartition créé');
+        }
+
+        // 2. Graphique Évolution (Courbe)
+        const ctxEvolution = document.getElementById('chartEvolution');
+        if (ctxEvolution) {
+            if (chartInstances.evolution) {
+                chartInstances.evolution.destroy();
+            }
+            
+            // Regrouper par date
+            const parJour = {};
+            toutesLesDemandes.forEach(d => {
+                const jour = new Date(d.date_creation).toLocaleDateString('fr-FR');
+                parJour[jour] = (parJour[jour] || 0) + 1;
+            });
+            
+            const labels = Object.keys(parJour);
+            const data = Object.values(parJour);
+            
+            chartInstances.evolution = new Chart(ctxEvolution, {
+                type: 'line',
+                data: {
+                    labels: labels.length > 0 ? labels : ['Aucune donnée'],
+                    datasets: [{
+                        label: 'Demandes reçues',
+                        data: data.length > 0 ? data : [0],
+                        borderColor: '#013e37',
+                        backgroundColor: 'rgba(1, 62, 55, 0.1)',
+                        fill: true,
+                        tension: 0.35,
+                        pointBackgroundColor: '#013e37',
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2,
+                        pointRadius: 5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: { 
+                            beginAtZero: true, 
+                            ticks: { stepSize: 1 },
+                            grid: { color: 'rgba(0,0,0,0.05)' }
+                        },
+                        x: {
+                            grid: { display: false }
+                        }
+                    }
+                }
+            });
+            console.log('✅ Graphique Évolution créé');
+        }
+
+        // 3. Graphique Spécialités (Barres)
+        const ctxSpecialites = document.getElementById('chartSpecialites');
+        if (ctxSpecialites) {
+            if (chartInstances.specialites) {
+                chartInstances.specialites.destroy();
+            }
+            
+            // Compter par spécialité
+            const parSpecialite = {};
+            toutesLesDemandes.forEach(d => {
+                const tech = listeTechniciens.find(t => t.id === d.technicien_id);
+                const spec = tech?.specialite || 'Non assigné';
+                parSpecialite[spec] = (parSpecialite[spec] || 0) + 1;
+            });
+            
+            const labels = Object.keys(parSpecialite);
+            const data = Object.values(parSpecialite);
+            
+            chartInstances.specialites = new Chart(ctxSpecialites, {
+                type: 'bar',
+                data: {
+                    labels: labels.length > 0 ? labels : ['Aucune donnée'],
+                    datasets: [{
+                        label: 'Demandes',
+                        data: data.length > 0 ? data : [0],
+                        backgroundColor: '#013e37',
+                        borderRadius: 5,
+                        borderSkipped: false
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        x: { 
+                            beginAtZero: true, 
+                            ticks: { stepSize: 1 },
+                            grid: { color: 'rgba(0,0,0,0.05)' }
+                        },
+                        y: {
+                            grid: { display: false }
+                        }
+                    }
+                }
+            });
+            console.log('✅ Graphique Spécialités créé');
+        }
+
+    } catch (error) {
+        console.error('❌ Erreur création graphiques:', error);
     }
 }
+
 // ============================================
+// FORCER LE RECHARGEMENT DES GRAPHIQUES
+// ============================================
+function rechargerGraphiques() {
+    // Réinitialiser les instances
+    chartInstances = {
+        statuts: null,
+        evolution: null,
+        specialites: null
+    };
+    chartsCreees = false;
+    chargerStatistiquesCompletes();
+}
 // AJOUTER UN SPÉCIALISTE
 // ============================================
 document.getElementById('btnSaveSpecialiste').addEventListener('click', async () => {
