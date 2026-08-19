@@ -428,16 +428,13 @@ body {
     }
 
     try {
-      const { data, error } = await supabaseClient.auth.signInWithPassword({
-        email: email,
-        password: password
-      });
-
-      if (error) throw error;
-
-      alert('✅ Connexion réussie !');
-      window.location.href = "accueil.html";
-
+     // PAR CE CI (URL FIXE) :
+const { data, error } = await supabaseClient.auth.signInWithOAuth({
+    provider: 'google',
+    options: {
+        redirectTo: 'https://faussirouan.github.io/securenet/accueil.html'
+    }
+});
     } catch (error) {
       alert('❌ Erreur : ' + error.message);
     }
