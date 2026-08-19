@@ -367,6 +367,11 @@ body {
   const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
   // ============================================
+  // URL DU SITE EN LIGNE
+  // ============================================
+  const SITE_URL = 'https://faussirouan.github.io/securenet';
+
+  // ============================================
   // TOGGLE CONNEXION / INSCRIPTION
   // ============================================
 
@@ -428,20 +433,23 @@ body {
     }
 
     try {
-     // PAR CE CI (URL FIXE) :
-const { data, error } = await supabaseClient.auth.signInWithOAuth({
-    provider: 'google',
-    options: {
-        redirectTo: 'https://faussirouan.github.io/securenet/accueil.html'
-    }
-});
+      const { data, error } = await supabaseClient.auth.signInWithPassword({
+        email: email,
+        password: password
+      });
+
+      if (error) throw error;
+
+      alert('✅ Connexion réussie !');
+      window.location.href = "accueil.html";
+
     } catch (error) {
       alert('❌ Erreur : ' + error.message);
     }
   });
 
   // ============================================
-  // INSCRIPTION - VERSION UNIQUE
+  // INSCRIPTION
   // ============================================
 
   document.getElementById('signupForm').addEventListener('submit', async function(e) {
@@ -457,7 +465,6 @@ const { data, error } = await supabaseClient.auth.signInWithOAuth({
     }
 
     try {
-      // 1. Crée le compte dans auth.users
       const { data, error } = await supabaseClient.auth.signUp({
         email: email,
         password: password,
@@ -470,7 +477,6 @@ const { data, error } = await supabaseClient.auth.signInWithOAuth({
 
       if (error) throw error;
 
-      // 2. Crée la fiche client
       if (data.user) {
         const { error: clientError } = await supabaseClient
           .from('client')
@@ -496,7 +502,7 @@ const { data, error } = await supabaseClient.auth.signInWithOAuth({
   });
 
   // ============================================
-  // CONNEXION AVEC GOOGLE
+  // CONNEXION AVEC GOOGLE - URL FIXE
   // ============================================
 
   // Bouton Google dans la section Connexion
@@ -505,7 +511,7 @@ const { data, error } = await supabaseClient.auth.signInWithOAuth({
       const { data, error } = await supabaseClient.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: window.location.origin + '/accueil.html'
+          redirectTo: SITE_URL + '/accueil.html'
         }
       });
 
@@ -524,7 +530,7 @@ const { data, error } = await supabaseClient.auth.signInWithOAuth({
       const { data, error } = await supabaseClient.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: window.location.origin + '/accueil.html'
+          redirectTo: SITE_URL + '/accueil.html'
         }
       });
 
