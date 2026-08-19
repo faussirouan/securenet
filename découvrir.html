@@ -344,110 +344,115 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
  <script>
     // ============================================
-    // supabaseClient est déjà déclaré plus haut dans cette page,
-    // on le réutilise directement ici, pas besoin de le redéclarer.
+    // CONFIGURATION SUPABASE
     // ============================================
 
+    // ============================================
+    // GESTION DU MODAL - SANS VÉRIFICATION
+    // ============================================
     const openBtn = document.getElementById('openModalBtn');
     const closeBtn = document.getElementById('closeModalBtn');
     const overlay = document.getElementById('modalOverlay');
     const contactForm = document.getElementById('contactForm');
 
-    // Ouvrir la modal — vérifie d'abord que le client est connecté
-    openBtn.addEventListener('click', async function() {
-        const { data: { session } } = await supabaseClient.auth.getSession();
+    // Ouvrir le modal DIRECTEMENT (sans vérification)
+    if (openBtn) {
+        openBtn.addEventListener('click', function() {
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+    }
 
-        if (!session) {
-            alert('Veuillez vous connecter ou créer un compte avant de faire une demande.');
-            window.location.href = 'auth-form.html';
-            return;
-        }
-
-        overlay.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    });
-
-    // Fermer la modal
-    closeBtn.addEventListener('click', function() {
-        overlay.classList.remove('active');
-        document.body.style.overflow = '';
-    });
+    // Fermer le modal
+    if (closeBtn) {
+        closeBtn.addEventListener('click', function() {
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+    }
 
     // Fermer en cliquant à l'extérieur
-    overlay.addEventListener('click', function(event) {
-        if (event.target === overlay) {
-            overlay.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-    });
+    if (overlay) {
+        overlay.addEventListener('click', function(event) {
+            if (event.target === overlay) {
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+    }
 
-    // Fermer avec la touche Echap
+    // Fermer avec Echap
     document.addEventListener('keydown', function(event) {
-        if (event.key === 'Escape' && overlay.classList.contains('active')) {
+        if (event.key === 'Escape' && overlay && overlay.classList.contains('active')) {
             overlay.classList.remove('active');
             document.body.style.overflow = '';
         }
     });
 
     // ============================================
-    // ENVOI DE LA DEMANDE VERS SUPABASE
+    // ENVOI DU FORMULAIRE
     // ============================================
-    contactForm.addEventListener('submit', async function(e) {
-        e.preventDefault();
+    if (contactForm) {
+        contactForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
 
-        const entreprise = document.getElementById('nom').value;
-        const telephone = document.getElementById('telephone').value;
-        const typeLocal = document.getElementById('typeLocal').value;
-        const ville = document.getElementById('ville').value;
-        const besoin = document.getElementById('besoin').value;
+            const entreprise = document.getElementById('nom').value;
+            const telephone = document.getElementById('telephone').value;
+            const typeLocal = document.getElementById('typeLocal').value;
+            const ville = document.getElementById('ville').value;
+            const besoin = document.getElementById('besoin').value;
 
-        if (!entreprise || !telephone || !typeLocal || !ville) {
-            alert('Veuillez remplir tous les champs obligatoires.');
-            return;
-        }
-
-        try {
-            const { data: { user } } = await supabaseClient.auth.getUser();
-
-            if (!user) {
-                alert('Session expirée, veuillez vous reconnecter.');
-                window.location.href = 'auth-form.html';
+            if (!entreprise || !telephone || !typeLocal || !ville) {
+                alert('Veuillez remplir tous les champs obligatoires.');
                 return;
             }
 
-            // Crée la fiche client si elle n'existe pas encore, ne fait rien si elle existe déjà
-            const nomClient = user.user_metadata?.full_name || user.email;
-            const { error: upsertClientError } = await supabaseClient
-                .from('client')
-                .upsert(
-                    { id: user.id, nom: nomClient },
-                    { onConflict: 'id', ignoreDuplicates: true }
-                );
+            try {
+                // Récupérer l'utilisateur connecté
+                const { data: { user } } = await supabaseClient.auth.getUser();
 
-            if (upsertClientError) throw upsertClientError;
-
-            const { error } = await supabaseClient
-                .from('demande_audit')
-                .insert({
-                    client_id: user.id,
+                // Si connecté, ajouter client_id
+                const demandeData = {
                     telephone: telephone,
                     entreprise: entreprise,
                     type_local: typeLocal,
                     ville: ville,
-                    message: besoin
-                });
+                    message: besoin,
+                    statut: 'nouveau',
+                    date_creation: new Date().toISOString()
+                };
 
-            if (error) throw error;
+                // Si l'utilisateur est connecté, ajouter client_id
+                if (user) {
+                    demandeData.client_id = user.id;
+                    
+                    // Créer ou mettre à jour le client
+                    const nomClient = user.user_metadata?.full_name || user.email || entreprise;
+                    await supabaseClient
+                        .from('client')
+                        .upsert(
+                            { id: user.id, nom: nomClient },
+                            { onConflict: 'id', ignoreDuplicates: true }
+                        );
+                }
 
-            alert('✅ Votre demande a été envoyée ! Un technicien vous contactera bientôt.');
-            contactForm.reset();
-            overlay.classList.remove('active');
-            document.body.style.overflow = '';
+                const { error } = await supabaseClient
+                    .from('demande_audit')
+                    .insert(demandeData);
 
-        } catch (error) {
-            alert('❌ Erreur : ' + error.message);
-        }
-    });
+                if (error) throw error;
+
+                alert('✅ Votre demande a été envoyée ! Un technicien vous contactera bientôt.');
+                contactForm.reset();
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+
+            } catch (error) {
+                console.error('Erreur:', error);
+                alert('❌ Erreur : ' + error.message);
+            }
+        });
+    }
 </script>
         </div>
       </div>
@@ -492,7 +497,6 @@
     // ============================================================
     // GESTION DES BOUTONS DE FILTRE (Audits, Installation, Vidéosurveillance)
     // ============================================================
-    
     // Sélectionne tous les boutons de filtre
     const filterBtns = document.querySelectorAll('.boutons .bout');
     
@@ -532,6 +536,7 @@
             }
         });
     }
+    window
     
     // Ajoute un événement click sur chaque bouton de filtre
     filterBtns.forEach(btn => {

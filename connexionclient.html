@@ -299,11 +299,15 @@ body {
     </form>
     <div class="divider">ou continuer avec</div>
     <div class="social-row">
-      <button class="social-btn" type="button">
-        <svg viewBox="0 0 24 24"><path fill="#EA4335" d="M12 10.2v3.9h5.5c-.24 1.4-1.7 4.1-5.5 4.1-3.3 0-6-2.7-6-6.2s2.7-6.2 6-6.2c1.9 0 3.1.8 3.8 1.5l2.6-2.5C16.9 2.9 14.7 2 12 2 6.9 2 2.7 6.2 2.7 12S6.9 22 12 22c6.9 0 9.3-4.8 9.3-7.3 0-.5-.1-.9-.1-1.3H12z"/></svg>
+      <!-- Bouton Google avec ID -->
+      <button class="social-btn" id="googleLogin" type="button">
+        <svg viewBox="0 0 24 24" width="18" height="18">
+          <path fill="#EA4335" d="M12 10.2v3.9h5.5c-.24 1.4-1.7 4.1-5.5 4.1-3.3 0-6-2.7-6-6.2s2.7-6.2 6-6.2c1.9 0 3.1.8 3.8 1.5l2.6-2.5C16.9 2.9 14.7 2 12 2 6.9 2 2.7 6.2 2.7 12S6.9 22 12 22c6.9 0 9.3-4.8 9.3-7.3 0-.5-.1-.9-.1-1.3H12z"/>
+        </svg>
         Google
       </button>
     </div>
+    
     <div class="switch-hint">Pas encore de compte ? <button type="button" id="switchToSignup">Créer un compte</button></div>
   </div>
 
@@ -329,8 +333,11 @@ body {
     </form>
     <div class="divider">ou continuer avec</div>
     <div class="social-row">
-      <button class="social-btn" type="button">
-        <svg viewBox="0 0 24 24"><path fill="#EA4335" d="M12 10.2v3.9h5.5c-.24 1.4-1.7 4.1-5.5 4.1-3.3 0-6-2.7-6-6.2s2.7-6.2 6-6.2c1.9 0 3.1.8 3.8 1.5l2.6-2.5C16.9 2.9 14.7 2 12 2 6.9 2 2.7 6.2 2.7 12S6.9 22 12 22c6.9 0 9.3-4.8 9.3-7.3 0-.5-.1-.9-.1-1.3H12z"/></svg>
+      <!-- Bouton Google avec ID -->
+      <button class="social-btn" id="googleSignup" type="button">
+        <svg viewBox="0 0 24 24" width="18" height="18">
+          <path fill="#EA4335" d="M12 10.2v3.9h5.5c-.24 1.4-1.7 4.1-5.5 4.1-3.3 0-6-2.7-6-6.2s2.7-6.2 6-6.2c1.9 0 3.1.8 3.8 1.5l2.6-2.5C16.9 2.9 14.7 2 12 2 6.9 2 2.7 6.2 2.7 12S6.9 22 12 22c6.9 0 9.3-4.8 9.3-7.3 0-.5-.1-.9-.1-1.3H12z"/>
+        </svg>
         Google
       </button>
     </div>
@@ -477,7 +484,6 @@ body {
 
         if (clientError) {
           console.error('Erreur création fiche client :', clientError);
-          // Si erreur de contrainte, on continue quand même
           if (clientError.code !== '23505') {
             throw clientError;
           }
@@ -485,9 +491,49 @@ body {
       }
 
       alert('✅ Inscription réussie ! Bienvenue ' + name);
-
-      // 3. Rediriger vers la page d'accueil
       window.location.href = "accueil.html";
+
+    } catch (error) {
+      alert('❌ Erreur : ' + error.message);
+    }
+  });
+
+  // ============================================
+  // CONNEXION AVEC GOOGLE
+  // ============================================
+
+  // Bouton Google dans la section Connexion
+  document.getElementById('googleLogin').addEventListener('click', async function() {
+    try {
+      const { data, error } = await supabaseClient.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: window.location.origin + '/accueil.html'
+        }
+      });
+
+      if (error) throw error;
+      
+      console.log('✅ Redirection vers Google...');
+
+    } catch (error) {
+      alert('❌ Erreur : ' + error.message);
+    }
+  });
+
+  // Bouton Google dans la section Inscription
+  document.getElementById('googleSignup').addEventListener('click', async function() {
+    try {
+      const { data, error } = await supabaseClient.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: window.location.origin + '/accueil.html'
+        }
+      });
+
+      if (error) throw error;
+      
+      console.log('✅ Redirection vers Google...');
 
     } catch (error) {
       alert('❌ Erreur : ' + error.message);

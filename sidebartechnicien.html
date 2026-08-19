@@ -97,110 +97,142 @@
     });
 
     // ============================================================
-    // ===== CHARGEMENT DES DEMANDES =====
+    // ===== CACHE POUR LES DONNÉES =====
     // ============================================================
-    async function chargerDemandes() {
+    let cacheDemandes = null;
+    let cacheTimestamp = 0;
+    const CACHE_DURATION = 30000; // 30 secondes
+
+    // ============================================================
+    // ===== CHARGEMENT DES DEMANDES - AVEC CACHE =====
+    // ============================================================
+    async function chargerDemandes(forceRefresh = false) {
         const container = document.getElementById('demandesContainer');
-        container.innerHTML = `<div class="text-center py-4"><div class="spinner-border text-success" role="status"></div><p class="mt-2">Chargement...</p></div>`;
+        
+        // Vérifier le cache
+        const now = Date.now();
+        if (!forceRefresh && cacheDemandes && (now - cacheTimestamp) < CACHE_DURATION) {
+            afficherDemandes(cacheDemandes);
+            return;
+        }
 
         try {
-            const { data, error } = await supabaseClient.rpc('get_demandes_technicien', {
-                p_technicien_id: technicienId
-            });
+            container.innerHTML = `<div class="text-center py-4"><div class="spinner-border spinner-border-sm text-success" role="status"></div><span class="ms-2">Chargement...</span></div>`;
 
-            if (error) {
-                container.innerHTML = `<p class="text-danger text-center py-4">❌ Erreur : ${error.message}</p>`;
-                return;
-            }
+            const { data, error } = await supabaseClient
+                .from('demande_audit')
+                .select(`
+                    id,
+                    telephone,
+                    entreprise,
+                    type_local,
+                    ville,
+                    message,
+                    statut,
+                    date_creation,
+                    client:client_id (nom)
+                `)
+                .eq('technicien_id', technicienId)
+                .order('date_creation', { ascending: false })
+                .limit(50);
 
-            if (!data || data.length === 0) {
-                container.innerHTML = `<p class="text-muted text-center py-4">📭 Aucune demande assignée pour le moment.</p>`;
-                return;
-            }
+            if (error) throw error;
 
-            container.innerHTML = data.map((d) => {
-                const badge = d.statut === 'traite'
-                    ? '<span class="badge-statut badge-traite">✅ Traité</span>'
-                    : '<span class="badge-statut badge-assigne">⏳ En attente</span>';
+            // Mettre en cache
+            cacheDemandes = data || [];
+            cacheTimestamp = now;
 
-                const dateFormatee = new Date(d.date_creation).toLocaleDateString('fr-FR');
-                const nomAffichage = d.nom_client || d.entreprise || 'Client';
-
-                return `
-                    <div class="demande-card" data-demande-id="${d.id}">
-                        <div class="d-flex justify-content-between align-items-start flex-wrap">
-                            <div class="value"><strong>${nomAffichage}</strong></div>
-                            ${badge}
-                        </div>
-                        <div class="label">📞 Téléphone</div>
-                        <div class="value">${d.telephone || '-'}</div>
-                        <div class="label">📍 Ville / Type</div>
-                        <div class="value">${d.ville || '-'} / ${d.type_local || '-'}</div>
-                        <div class="label">💬 Message</div>
-                        <div class="value">${(d.message || '-').substring(0, 100)}${d.message && d.message.length > 100 ? '...' : ''}</div>
-                        <div class="label">📅 Date</div>
-                        <div class="value">${dateFormatee}</div>
-
-                        ${d.statut !== 'traite' ? `
-                            <textarea class="form-control reponse-input" rows="3" 
-                                placeholder="✏️ Écris ta réponse ici..." 
-                                data-demande-id="${d.id}" 
-                                data-telephone="${d.telephone || ''}"></textarea>
-                            <button class="btn btn-whatsapp btn-envoyer mt-2" data-demande-id="${d.id}">
-                                <i class="bi bi-whatsapp"></i> 📲 Envoyer
-                            </button>
-                        ` : `
-                            <!-- AUCUN BOUTON PDF -->
-                        `}
-                    </div>
-                `;
-            }).join('');
-
-            // === BOUTONS WHATSAPP ===
-            document.querySelectorAll('.btn-envoyer').forEach(btn => {
-                btn.addEventListener('click', async function() {
-                    const demandeId = this.getAttribute('data-demande-id');
-                    const textarea = document.querySelector(`.reponse-input[data-demande-id="${demandeId}"]`);
-                    const message = textarea.value.trim();
-                    const telephone = textarea.getAttribute('data-telephone');
-
-                    if (!message) {
-                        alert('⚠️ Écris une réponse avant d\'envoyer.');
-                        return;
-                    }
-
-                    const { error } = await supabaseClient.rpc('repondre_demande', {
-                        p_demande_id: demandeId,
-                        p_technicien_id: technicienId,
-                        p_message: message
-                    });
-
-                    if (error) {
-                        alert('❌ Erreur : ' + error.message);
-                        return;
-                    }
-
-                    if (telephone) {
-                        const numeroPropre = telephone.replace(/[^0-9]/g, '');
-                        const lienWhatsApp = `https://wa.me/${numeroPropre}?text=${encodeURIComponent(message)}`;
-                        window.open(lienWhatsApp, '_blank');
-                    }
-
-                    chargerDemandes();
-                });
-            });
+            afficherDemandes(cacheDemandes);
 
         } catch (err) {
             console.error('❌ Erreur:', err);
-            container.innerHTML = `<p class="text-danger text-center py-4">❌ Erreur : ${err.message}</p>`;
+            container.innerHTML = `<p class="text-danger text-center py-4">❌ ${err.message}</p>`;
         }
     }
 
+    // ============================================================
+    // ===== AFFICHER LES DEMANDES =====
+    // ============================================================
+    function afficherDemandes(data) {
+        const container = document.getElementById('demandesContainer');
+
+        if (!data || data.length === 0) {
+            container.innerHTML = `<p class="text-center text-muted py-4">📭 Aucune demande assignée</p>`;
+            return;
+        }
+
+        let html = '';
+        for (const d of data) {
+            const badge = d.statut === 'traite'
+                ? '<span class="badge-statut badge-traite">✅ Traité</span>'
+                : '<span class="badge-statut badge-assigne">⏳ En attente</span>';
+
+            const nomAffichage = d.entreprise || d.client?.nom || 'Client';
+            const dateFormatee = new Date(d.date_creation).toLocaleDateString('fr-FR');
+
+            html += `
+                <div class="demande-card">
+                    <div class="d-flex justify-content-between align-items-start flex-wrap">
+                        <div class="value"><strong>${nomAffichage}</strong></div>
+                        ${badge}
+                    </div>
+                    <div class="label">📞 Téléphone</div>
+                    <div class="value">${d.telephone || '-'}</div>
+                    <div class="label">📍 Ville / Type</div>
+                    <div class="value">${d.ville || '-'} / ${d.type_local || '-'}</div>
+                    <div class="label">💬 Message</div>
+                    <div class="value">${d.message || '-'}</div>
+                    <div class="label">📅 Date</div>
+                    <div class="value">${dateFormatee}</div>
+
+                    ${d.statut !== 'traite' ? `
+                        <textarea class="form-control reponse-input mt-2" rows="2" 
+                            placeholder="✏️ Réponse..." 
+                            data-id="${d.id}" 
+                            data-tel="${d.telephone || ''}"></textarea>
+                        <button class="btn btn-whatsapp btn-envoyer mt-1" data-id="${d.id}">
+                            <i class="bi bi-whatsapp"></i> Envoyer
+                        </button>
+                    ` : ''}
+                </div>
+            `;
+        }
+
+        container.innerHTML = html;
+
+        // Événements WhatsApp (une seule fois)
+        document.querySelectorAll('.btn-envoyer').forEach(btn => {
+            btn.onclick = async function() {
+                const id = this.dataset.id;
+                const textarea = document.querySelector(`.reponse-input[data-id="${id}"]`);
+                const message = textarea?.value.trim();
+                const tel = textarea?.dataset.tel;
+
+                if (!message) return alert('Écris une réponse.');
+
+                const { error } = await supabaseClient.rpc('repondre_demande', {
+                    p_demande_id: id,
+                    p_technicien_id: technicienId,
+                    p_message: message
+                });
+
+                if (error) return alert('❌ ' + error.message);
+
+                if (tel) {
+                    window.open(`https://wa.me/${tel.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(message)}`, '_blank');
+                }
+
+                // Recharger avec force refresh
+                chargerDemandes(true);
+            };
+        });
+    }
+    
     // ===== LANCEMENT =====
     document.addEventListener('DOMContentLoaded', () => {
         chargerDemandes();
     });
 </script>
-
+ 
 </body>
 </html>
